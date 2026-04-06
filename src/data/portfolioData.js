@@ -8,9 +8,9 @@ export const LINKS = {
 
 export const THEMES = {
   yellow: { hex: '#d4ff00', dim: 'rgba(212,255,0,0.07)' },
-  cyan:   { hex: '#00f0ff', dim: 'rgba(0,240,255,0.07)' },
+  cyan: { hex: '#00f0ff', dim: 'rgba(0,240,255,0.07)' },
   purple: { hex: '#b026ff', dim: 'rgba(176,38,255,0.07)' },
-  green:  { hex: '#00ff44', dim: 'rgba(0,255,68,0.07)' },
+  green: { hex: '#00ff44', dim: 'rgba(0,255,68,0.07)' },
   orange: { hex: '#ff9900', dim: 'rgba(255,153,0,0.07)' }
 }
 
@@ -37,21 +37,21 @@ export const projects = [
     status: { pt: 'Em produção', en: 'In Production' },
     statusClass: 'status-green',
     image: '/assets/media/projects/rfid-novo.png',
-    desc: { 
-      pt: 'Sistema Android (Java) desenvolvido para otimizar o processo de inventário de lojas com tecnologia RFID. Projeto funcional atualmente implantado e em uso no cliente.', 
-      en: 'Android system (Java) developed to optimize the store inventory process using RFID technology. Functional project currently deployed and in use by the client.' 
+    desc: {
+      pt: 'Sistema Android (Java) desenvolvido para otimizar o processo de inventário de lojas com tecnologia RFID. Projeto funcional atualmente implantado e em uso no cliente.',
+      en: 'Android system (Java) developed to optimize the store inventory process using RFID technology. Functional project currently deployed and in use by the client.'
     },
-    highlights: { 
+    highlights: {
       pt: [
-        'Integração com hardware RFID via protocolo serial', 
+        'Integração com hardware RFID via protocolo serial',
         'Leitura de tags em tempo real e geração de relatórios detalhados',
         'Processamento de arquivos CSV para sincronização de estoque'
-      ], 
+      ],
       en: [
-        'RFID hardware integration via serial protocol', 
+        'RFID hardware integration via serial protocol',
         'Real-time tag reading and detailed report generation',
         'CSV file processing for inventory synchronization'
-      ] 
+      ]
     },
     tags: ['Java', 'Android', 'RFID', 'CSV', 'SQLite'],
     link: "https://github.com/rbtzinn/RFID-NovoAtacarejo"
@@ -64,21 +64,21 @@ export const projects = [
     status: { pt: 'Em produção', en: 'In Production' },
     statusClass: 'status-green',
     image: '/assets/media/projects/frotas-demo.png',
-    desc: { 
-      pt: 'Aplicação mobile (Flutter/Dart) para controle de frotas com foco em rastreabilidade e comprovação por assinatura digital. Interface moderna com Material 3 e validações complexas.', 
-      en: 'Mobile application (Flutter/Dart) for fleet control focused on traceability and digital signature proof. Modern interface with Material 3 and complex validations.' 
+    desc: {
+      pt: 'Aplicação mobile (Flutter/Dart) para controle de frotas com foco em rastreabilidade e comprovação por assinatura digital. Interface moderna com Material 3 e validações complexas.',
+      en: 'Mobile application (Flutter/Dart) for fleet control focused on traceability and digital signature proof. Modern interface with Material 3 and complex validations.'
     },
-    highlights: { 
+    highlights: {
       pt: [
-        'Captura de assinaturas em canvas (Signature Pad) para comprovação', 
+        'Captura de assinaturas em canvas (Signature Pad) para comprovação',
         'Modo offline com fila de pendências (SharedPreferences) e sincronização automática',
         'Envio de dados via HTTP para Google Sheets através de Google Apps Script'
-      ], 
+      ],
       en: [
-        'Canvas signature capture for digital proof', 
+        'Canvas signature capture for digital proof',
         'Offline mode with pending queue (SharedPreferences) and auto-sync',
         'Data submission via HTTP to Google Sheets through Google Apps Script'
-      ] 
+      ]
     },
     tags: ['Flutter', 'Dart', 'Google Sheets API', 'Offline', 'Material 3'],
     link: "https://frotasapp.vercel.app"
@@ -91,23 +91,50 @@ export const projects = [
     status: { pt: 'Concluído', en: 'Completed' },
     statusClass: 'status-blue',
     image: '/assets/media/projects/emeptur-painel.png',
-    desc: { 
-      pt: 'Plataforma analítica para transparência ativa e gestão das contratações artísticas da EMPETUR (PE). Em uso oficial no portal de transparência da instituição.', 
-      en: 'Analytical platform for active transparency and management of EMPETUR (PE) artistic contracts. In official use at the institution’s transparency portal.' 
+    desc: {
+      pt: 'Plataforma analítica para transparência ativa e gestão das contratações artísticas da EMPETUR (PE). Em uso oficial no portal de transparência da instituição.',
+      en: 'Analytical platform for active transparency and management of EMPETUR (PE) artistic contracts. In official use at the institution’s transparency portal.'
     },
-    highlights: { 
+    highlights: {
       pt: [
-        'Mapas de calor interativos via D3.js com zoom dinâmico por centroides geográficos', 
+        'Mapas de calor interativos via D3.js com zoom dinâmico por centroides geográficos',
         'Algoritmos de normalização de strings e limpeza de bases governamentais não estruturadas',
         'KPIs inteligentes de descoberta de tendências em tempo real com PapaParse'
-      ], 
+      ],
       en: [
-        'Interactive heatmaps via D3.js with dynamic zoom by geographical centroids', 
+        'Interactive heatmaps via D3.js with dynamic zoom by geographical centroids',
         'String normalization algorithms and cleaning of unstructured government databases',
         'Smart real-time trend discovery KPIs with PapaParse'
-      ] 
+      ]
     },
     tags: ['React', 'Tailwind', 'D3.js', 'PapaParse', 'Tremor'],
     link: "https://empetur-painel.vercel.app"
   },
+  {
+    id: 'filmsport',
+    title: 'StreamVibe',
+    client: 'Projeto Pessoal',
+    date: 'Abr 2026',
+    status: { pt: 'Concluído', en: 'Completed' },
+    statusClass: 'status-blue',
+    image: '/assets/media/projects/streamvibe.png',
+    desc: {
+      pt: 'Plataforma web de catálogo de filmes inspirada em serviços de streaming. Consome a API do TMDB para exibir filmes em alta, detalhes, trailers e permite criar lista de favoritos com persistência local.',
+      en: 'Movie catalog web platform inspired by streaming services. Consumes the TMDB API to display trending movies, details, trailers, and allows creating a favorites list with local persistence.'
+    },
+    highlights: {
+      pt: [
+        'Integração com a API do TMDB para dados de filmes em tempo real',
+        'Hero banner dinâmico com filme destaque, nota e sinopse',
+        'Sistema de favoritos com lista pessoal e persistência via localStorage'
+      ],
+      en: [
+        'TMDB API integration for real-time movie data',
+        'Dynamic hero banner with featured movie, rating, and synopsis',
+        'Favorites system with personal list and localStorage persistence'
+      ]
+    },
+    tags: ['React', 'TypeScript', 'Tailwind', 'TMDB API', 'Vite'],
+    link: 'https://films-port.vercel.app'
+  }
 ]
