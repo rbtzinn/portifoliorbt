@@ -136,5 +136,32 @@ export const projects = [
     },
     tags: ['React', 'TypeScript', 'Tailwind', 'TMDB API', 'Vite'],
     link: 'https://films-port.vercel.app'
+  },
+  {
+    id: 'luxe-store',
+    title: 'LUXE Store',
+    client: 'Projeto Pessoal',
+    date: 'Abr 2026',
+    status: { pt: 'Concluído', en: 'Completed' },
+    statusClass: 'status-blue',
+    image: '/assets/media/projects/luxe-store.png',
+    desc: {
+      pt: 'E-commerce premium desenvolvido com foco em experiência visual sofisticada, catálogo dinâmico e navegação imersiva. O projeto consome a DummyJSON para estruturar a vitrine de produtos, conta com internacionalização completa em PT-BR/EN, troca de idioma com loading visual e melhorias de UX como reset automático de scroll a cada mudança de rota.',
+      en: 'Premium e-commerce built with a strong focus on refined visual experience, dynamic catalog, and immersive navigation. The project consumes DummyJSON to power the product showcase, includes full PT-BR/EN internationalization, language switching with a visual loading state, and UX improvements such as automatic scroll reset on route changes.'
+    },
+    highlights: {
+      pt: [
+        'Integração com DummyJSON para catálogo dinâmico de produtos sem necessidade de banco de dados',
+        'Internacionalização completa em PT-BR e EN com seletor visual mais refinado',
+        'Experiência premium com scroll reset por rota, layout editorial e interface moderna responsiva'
+      ],
+      en: [
+        'DummyJSON integration for a dynamic product catalog without requiring a database',
+        'Complete PT-BR and EN internationalization with a more refined visual language switcher',
+        'Premium experience with route-based scroll reset, editorial layout, and modern responsive interface'
+      ]
+    },
+    tags: ['React', 'TypeScript', 'Tailwind', 'DummyJSON API', 'i18n', 'Vite'],
+    link: 'https://SEU-LINK-AQUI.com'
   }
 ]
