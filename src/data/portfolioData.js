@@ -162,6 +162,6 @@ export const projects = [
       ]
     },
     tags: ['React', 'TypeScript', 'Tailwind', 'DummyJSON API', 'i18n', 'Vite'],
-    link: 'https://SEU-LINK-AQUI.com'
+    link: 'https://luxestore-eight.vercel.app/'
   }
 ]
