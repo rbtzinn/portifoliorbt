@@ -1,9 +1,7 @@
-import { useState, useEffect, useCallback } from 'react'
+import { lazy, Suspense, useState, useEffect, useCallback } from 'react'
 import i18n from './data/i18n'
 import { THEMES, projects } from './data/portfolioData'
 import useKonamiCode from './hooks/useKonamiCode'
-import CustomCursor from './components/ui/CustomCursor'
-import Matrix from './components/ui/Matrix'
 import KonamiOverlay from './components/ui/KonamiOverlay'
 import ProjectModal from './components/ui/ProjectModal'
 import Sidebar from './components/layout/Sidebar'
@@ -12,11 +10,14 @@ import AboutPage from './components/sections/AboutPage'
 import SkillsPage from './components/sections/SkillsPage'
 import ProjectsPage from './components/sections/ProjectsPage'
 import ContactPage from './components/sections/ContactPage'
-import './styles/global.css'
+import './styles/tailwind.css'
+
+const CustomCursor = lazy(() => import('./components/ui/CustomCursor'))
+const Matrix = lazy(() => import('./components/ui/Matrix'))
 
 export default function App() {
   const [lang, setLangState] = useState(() => localStorage.getItem('portfolioLang') || 'pt')
-  const [mode, setModeState] = useState(() => localStorage.getItem('portfolioMode') || 'dev')
+  const [mode, setModeState] = useState(() => localStorage.getItem('portfolioMode') || 'recruiter')
   const [theme, setThemeState] = useState(() => localStorage.getItem('portfolioTheme') || 'yellow')
   const [page, setPage] = useState('home')
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -38,6 +39,17 @@ export default function App() {
     document.documentElement.style.setProperty('--accent', THEMES[theme].hex)
     document.documentElement.style.setProperty('--accent-dim', THEMES[theme].dim)
   }, [theme])
+
+  useEffect(() => {
+    document.body.classList.toggle('dev-cursor', mode === 'dev')
+    if (mode !== 'dev') {
+      document.body.classList.remove('cur-hover', 'cur-click')
+    }
+
+    return () => {
+      document.body.classList.remove('dev-cursor', 'cur-hover', 'cur-click')
+    }
+  }, [mode])
 
   useEffect(() => {
     fetch('https://api.github.com/users/rbtzinn')
@@ -87,8 +99,16 @@ export default function App() {
 
   return (
     <div className="portfolio-root">
-      <CustomCursor />
-      <Matrix active={matrixActive} onEnd={() => setMatrixActive(false)} />
+      {mode === 'dev' && (
+        <Suspense fallback={null}>
+          <CustomCursor />
+        </Suspense>
+      )}
+      {(mode === 'dev' || matrixActive) && (
+        <Suspense fallback={null}>
+          <Matrix active={matrixActive} onEnd={() => setMatrixActive(false)} />
+        </Suspense>
+      )}
       <KonamiOverlay show={showKonami} onClose={() => setShowKonami(false)} t={t} />
       <div className={`hint-toast ${showHint ? 'show' : 'hide'}`}>Konami Code: ↑↑↓↓←→←→BA</div>
 

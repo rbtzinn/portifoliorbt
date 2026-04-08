@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 *,
 *::before,
 *::after {
@@ -44,7 +48,7 @@
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
-/* Mantém o layout estável quando a barra aparece */
+/* MantÃ©m o layout estÃ¡vel quando a barra aparece */
 html {
   scrollbar-gutter: stable;
 }
@@ -2271,5 +2275,46 @@ svg {
   button,
   a {
     cursor: pointer
+  }
+}
+
+@layer base {
+  body {
+    cursor: auto;
+  }
+
+  body:not(.dev-cursor),
+  body:not(.dev-cursor) .portfolio-root,
+  body:not(.dev-cursor) * {
+    cursor: auto !important;
+  }
+
+  body:not(.dev-cursor) a,
+  body:not(.dev-cursor) button,
+  body:not(.dev-cursor) [role='button'],
+  body:not(.dev-cursor) input,
+  body:not(.dev-cursor) select,
+  body:not(.dev-cursor) textarea,
+  body:not(.dev-cursor) summary {
+    cursor: pointer !important;
+  }
+
+  body.dev-cursor,
+  body.dev-cursor .portfolio-root,
+  body.dev-cursor button,
+  body.dev-cursor a {
+    cursor: none;
+  }
+
+  @media (max-width: 768px) {
+    body.dev-cursor,
+    body.dev-cursor .portfolio-root {
+      cursor: auto;
+    }
+
+    body.dev-cursor button,
+    body.dev-cursor a {
+      cursor: pointer;
+    }
   }
 }
