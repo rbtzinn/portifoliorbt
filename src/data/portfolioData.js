@@ -171,6 +171,7 @@ export const projects = [
     date: 'Abr 2026',
     status: { pt: 'Em producao', en: 'Live' },
     statusClass: 'status-green',
+    image: '/assets/media/projects/nexcrm.png',
     desc: {
       pt: 'CRM full stack com autenticacao por perfil, dashboard operacional e modulos de clientes, deals, tarefas e usuarios. O projeto foi adaptado para deploy em producao com frontend na Vercel, backend FastAPI e banco MongoDB Atlas.',
       en: 'Full-stack CRM with role-based authentication, operational dashboards, and modules for customers, deals, tasks, and users. The project was adapted for production deployment with a Vercel frontend, FastAPI backend, and MongoDB Atlas.'
@@ -188,6 +189,6 @@ export const projects = [
       ]
     },
     tags: ['React', 'FastAPI', 'MongoDB Atlas', 'JWT', 'Vercel', 'CRM'],
-    link: 'https://github.com/rbtzinn/NexCRM'
+    link: 'https://nexcrm-web.vercel.app/login'
   }
 ]
