@@ -123,7 +123,7 @@ export default function App() {
             <HomePage mode={mode} lang={lang} t={t} navigate={navigate} setLang={setLang} startMatrix={() => setMatrixActive(true)} setTheme={setTheme} />
           </div>
           <div className={`page ${page === 'about' ? 'active visible' : ''}`}>
-            <AboutPage t={t} lang={lang} />
+            <AboutPage lang={lang} openModal={openModal} />
           </div>
           <div className={`page ${page === 'skills' ? 'active visible' : ''}`}>
             <SkillsPage t={t} />

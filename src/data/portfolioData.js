@@ -163,32 +163,5 @@ export const projects = [
     },
     tags: ['React', 'TypeScript', 'Tailwind', 'DummyJSON API', 'i18n', 'Vite'],
     link: 'https://luxestore-eight.vercel.app/'
-  },
-  {
-    id: 'nexcrm',
-    title: 'NexCRM',
-    client: 'Projeto Pessoal',
-    date: 'Abr 2026',
-    status: { pt: 'Em producao', en: 'Live' },
-    statusClass: 'status-green',
-    image: '/assets/media/projects/nexcrm.png',
-    desc: {
-      pt: 'CRM full stack com autenticacao por perfil, dashboard operacional e modulos de clientes, deals, tarefas e usuarios. O projeto foi adaptado para deploy em producao com frontend na Vercel, backend FastAPI e banco MongoDB Atlas.',
-      en: 'Full-stack CRM with role-based authentication, operational dashboards, and modules for customers, deals, tasks, and users. The project was adapted for production deployment with a Vercel frontend, FastAPI backend, and MongoDB Atlas.'
-    },
-    highlights: {
-      pt: [
-        'Autenticacao com tres perfis de acesso: admin, manager e analyst',
-        'Backend em FastAPI com seed inicial, JWT e integracao com MongoDB Atlas',
-        'Deploy separado de frontend e backend na Vercel com ajuste de rotas e ambiente'
-      ],
-      en: [
-        'Authentication with three access roles: admin, manager, and analyst',
-        'FastAPI backend with initial seeding, JWT, and MongoDB Atlas integration',
-        'Separated frontend and backend deployment on Vercel with routing and environment setup'
-      ]
-    },
-    tags: ['React', 'FastAPI', 'MongoDB Atlas', 'JWT', 'Vercel', 'CRM'],
-    link: 'https://nexcrm-web.vercel.app/login'
   }
 ]
