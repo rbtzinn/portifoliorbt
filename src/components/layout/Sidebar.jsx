@@ -12,7 +12,7 @@ const Sidebar = ({ page, navigate, lang, setLang, mode, setMode, theme, setTheme
         </span>
         <div>
           <p className="brand-name">Roberto Miranda</p>
-          <p className="brand-sub">FULL STACK DEVELOPER</p>
+          <p className="brand-sub">FRONTEND DEVELOPER</p>
         </div>
       </div>
       <div className="divider"></div>
