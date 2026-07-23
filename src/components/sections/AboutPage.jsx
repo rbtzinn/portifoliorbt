@@ -171,7 +171,8 @@ const AboutPage = ({ lang, openModal }) => {
       <header className="page-header about-hero stagger">
         <div>
           <p className="sec-label">{text.eyebrow}</p>
-          <h1 className="page-title">{text.title}</h1>
+          <h1 className="page-title">Roberto <span className="accent">Miranda</span></h1>
+          <p className="about-positioning">{text.title}</p>
           <p className="bio">{text.bio}</p>
           <div className="meta-row">
             <span className="meta-item">Recife, PE</span>
