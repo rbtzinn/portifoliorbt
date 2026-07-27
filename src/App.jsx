@@ -211,7 +211,7 @@ function CheckIcon() {
 
 export default function App() {
   const [lang, setLang] = useState(() => localStorage.getItem('portfolioLang') || 'pt')
-  const [theme, setTheme] = useState(() => localStorage.getItem('portfolioTheme') || 'yellow')
+  const [theme, setTheme] = useState(() => localStorage.getItem('portfolioThemeV2') || 'aurora')
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeShowcaseId, setActiveShowcaseId] = useState('luxe-store')
   const [projectFilter, setProjectFilter] = useState('all')
@@ -227,10 +227,11 @@ export default function App() {
   }, [lang])
 
   useEffect(() => {
-    localStorage.setItem('portfolioTheme', theme)
-    const themeObj = THEMES[theme] || THEMES.yellow
+    localStorage.setItem('portfolioThemeV2', theme)
+    const themeObj = THEMES[theme] || THEMES.aurora
     document.documentElement.style.setProperty('--lime', themeObj.hex)
     document.documentElement.style.setProperty('--lime-soft', themeObj.dim)
+    document.documentElement.style.setProperty('--accent-secondary', themeObj.secondary)
   }, [theme])
 
   useEffect(() => {

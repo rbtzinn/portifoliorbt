@@ -7,11 +7,10 @@ export const LINKS = {
 }
 
 export const THEMES = {
-  yellow: { hex: '#d4ff00', dim: 'rgba(212,255,0,0.07)' },
-  cyan: { hex: '#00f0ff', dim: 'rgba(0,240,255,0.07)' },
-  purple: { hex: '#b026ff', dim: 'rgba(176,38,255,0.07)' },
-  green: { hex: '#00ff44', dim: 'rgba(0,255,68,0.07)' },
-  orange: { hex: '#ff9900', dim: 'rgba(255,153,0,0.07)' }
+  aurora: { hex: '#ff725c', dim: 'rgba(255,114,92,0.10)', secondary: '#8ce3d3' },
+  lavender: { hex: '#a9a4ff', dim: 'rgba(169,164,255,0.10)', secondary: '#ff9b78' },
+  ocean: { hex: '#5dd6c0', dim: 'rgba(93,214,192,0.10)', secondary: '#ffbd70' },
+  rose: { hex: '#ff82a9', dim: 'rgba(255,130,169,0.10)', secondary: '#9cb8ff' }
 }
 
 export const skillsData = [
