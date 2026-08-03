@@ -5,6 +5,8 @@ export default function HeroScene() {
 
   useEffect(() => {
     const container = containerRef.current
+    if (window.matchMedia('(max-width: 1080px)').matches) return undefined
+
     let cancelled = false
     let destroyScene = () => {}
 

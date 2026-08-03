@@ -120,7 +120,6 @@ export default function App() {
   const [copied, setCopied] = useState(false)
   const text = content[lang]
   const orderedProjects = projectOrder.map((id) => projects.find((project) => project.id === id)).filter(Boolean)
-  const featured = orderedProjects[0]
 
   useEffect(() => {
     localStorage.setItem('portfolioLang', lang)
@@ -142,11 +141,10 @@ export default function App() {
         .from('.hero-kicker', { opacity: 0, y: 18, duration: .65 })
         .from('.hero h1 span', { opacity: 0, yPercent: 110, rotate: 2, duration: .9, stagger: .1 }, '-=.4')
         .from('.hero-copy > p, .hero-actions, .availability', { opacity: 0, y: 20, duration: .65, stagger: .08 }, '-=.55')
-        .from('.scene-shell', { opacity: 0, scale: .92, rotate: 2, duration: 1 }, '-=.95')
+        .from('.hero-visual', { opacity: 0, scale: .9, duration: 1.1 }, '-=.95')
 
-      gsap.to('.scene-shell', {
-        yPercent: 16,
-        rotate: -2,
+      gsap.to('.hero-visual', {
+        yPercent: 12,
         ease: 'none',
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 },
       })
@@ -280,18 +278,8 @@ export default function App() {
             <div className="availability"><span />{text.availability}</div>
           </div>
 
-          <div className="scene-shell">
+          <div className="hero-visual">
             <HeroScene />
-            <div className="scene-grid" />
-            <div className="scene-label"><span>{text.featured}</span><small>WEBGL / THREE.JS</small></div>
-            <div className="scene-card">
-              <small>{featured.client} · {featured.date}</small>
-              <strong>{featured.title}</strong>
-              <p>{text.featuredCopy}</p>
-              <a href={featured.link} target="_blank" rel="noreferrer">{text.live} <Arrow /></a>
-            </div>
-            <span className="scene-coordinate coordinate-a">35.4° S</span>
-            <span className="scene-coordinate coordinate-b">008 / 026</span>
           </div>
         </section>
 
