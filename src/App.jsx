@@ -1,6 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { LINKS, projects, techGroups } from './data/portfolioData'
+import HeroScene from './components/ui/HeroScene'
 import './styles/tailwind.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const content = {
   pt: {
@@ -109,6 +114,7 @@ function Arrow() {
 }
 
 export default function App() {
+  const appRef = useRef(null)
   const [lang, setLang] = useState(() => localStorage.getItem('portfolioLang') || 'pt')
   const [menuOpen, setMenuOpen] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -126,18 +132,88 @@ export default function App() {
     return () => document.body.classList.remove('menu-open')
   }, [menuOpen])
 
-  useEffect(() => {
-    const sections = document.querySelectorAll('[data-reveal]')
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible')
-          observer.unobserve(entry.target)
-        }
+  useLayoutEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reducedMotion) return undefined
+
+    const context = gsap.context(() => {
+      const intro = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      intro
+        .from('.hero-kicker', { opacity: 0, y: 18, duration: .65 })
+        .from('.hero h1 span', { opacity: 0, yPercent: 110, rotate: 2, duration: .9, stagger: .1 }, '-=.4')
+        .from('.hero-copy > p, .hero-actions, .availability', { opacity: 0, y: 20, duration: .65, stagger: .08 }, '-=.55')
+        .from('.scene-shell', { opacity: 0, scale: .92, rotate: 2, duration: 1 }, '-=.95')
+
+      gsap.to('.scene-shell', {
+        yPercent: 16,
+        rotate: -2,
+        ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 },
       })
-    }, { threshold: 0.08 })
-    sections.forEach((section) => observer.observe(section))
-    return () => observer.disconnect()
+
+      gsap.from('.proof-row > div', {
+        opacity: 0,
+        y: 28,
+        stagger: .12,
+        duration: .7,
+        scrollTrigger: { trigger: '.proof-row', start: 'top 86%' },
+      })
+
+      gsap.utils.toArray('.section-intro').forEach((heading) => {
+        gsap.from(heading.children, {
+          opacity: 0,
+          y: 34,
+          stagger: .1,
+          duration: .8,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: heading, start: 'top 82%' },
+        })
+      })
+
+      gsap.utils.toArray('.project-row').forEach((row) => {
+        const media = row.querySelector('.project-media')
+        const copy = row.querySelector('.project-copy')
+        gsap.from([media, copy], {
+          opacity: 0,
+          y: 56,
+          stagger: .12,
+          duration: .9,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: row, start: 'top 82%' },
+        })
+        gsap.to(row.querySelector('.project-image'), {
+          yPercent: 8,
+          ease: 'none',
+          scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: .8 },
+        })
+      })
+
+      gsap.from('.timeline article', {
+        opacity: 0,
+        x: -28,
+        stagger: .1,
+        duration: .65,
+        scrollTrigger: { trigger: '.timeline', start: 'top 82%' },
+      })
+
+      gsap.from('.about-main, .skills-panel', {
+        opacity: 0,
+        y: 44,
+        stagger: .15,
+        duration: .85,
+        scrollTrigger: { trigger: '.about-section', start: 'top 78%' },
+      })
+
+      gsap.from('.contact-section > *', {
+        opacity: 0,
+        y: 34,
+        stagger: .1,
+        duration: .75,
+        scrollTrigger: { trigger: '.contact-section', start: 'top 80%' },
+      })
+    }, appRef)
+
+    return () => context.revert()
   }, [])
 
   const closeMenu = () => setMenuOpen(false)
@@ -148,7 +224,7 @@ export default function App() {
   }
 
   return (
-    <div className="site-shell">
+    <div className="site-shell" ref={appRef}>
       <header className="site-header">
         <div className="header-inner">
           <a className="brand" href="#inicio" aria-label="Roberto Miranda — início" onClick={closeMenu}>
@@ -177,7 +253,7 @@ export default function App() {
         <section className="hero" id="inicio">
           <div className="hero-copy">
             <div className="hero-kicker"><span />{text.eyebrow}</div>
-            <h1>{text.titleA}<br /><em>{text.titleB}</em><br />{text.titleC}</h1>
+            <h1><span>{text.titleA}</span><span><em>{text.titleB}</em></span><span>{text.titleC}</span></h1>
             <p>{text.intro}</p>
             <div className="hero-actions">
               <a className="button primary" href="#projetos">{text.work} <Arrow /></a>
@@ -186,18 +262,19 @@ export default function App() {
             <div className="availability"><span />{text.availability}</div>
           </div>
 
-          <article className="featured-card">
-            <div className="featured-top"><span>{text.featured}</span><small>01 / 05</small></div>
-            <a className="featured-image" href={featured.link} target="_blank" rel="noreferrer">
-              <img src={featured.image} alt={`Interface do projeto ${featured.title}`} />
-              <span className="floating-arrow"><Arrow /></span>
-            </a>
-            <div className="featured-content">
-              <div><small>{featured.client} · {featured.date}</small><h2>{featured.title}</h2></div>
+          <div className="scene-shell">
+            <HeroScene />
+            <div className="scene-grid" />
+            <div className="scene-label"><span>{text.featured}</span><small>WEBGL / THREE.JS</small></div>
+            <div className="scene-card">
+              <small>{featured.client} · {featured.date}</small>
+              <strong>{featured.title}</strong>
               <p>{text.featuredCopy}</p>
               <a href={featured.link} target="_blank" rel="noreferrer">{text.live} <Arrow /></a>
             </div>
-          </article>
+            <span className="scene-coordinate coordinate-a">35.4° S</span>
+            <span className="scene-coordinate coordinate-b">008 / 026</span>
+          </div>
         </section>
 
         <section className="proof-row" aria-label="Resumo profissional">
