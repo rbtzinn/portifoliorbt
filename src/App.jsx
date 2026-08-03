@@ -181,11 +181,13 @@ export default function App() {
           ease: 'power3.out',
           scrollTrigger: { trigger: row, start: 'top 82%' },
         })
-        gsap.to(row.querySelector('.project-image'), {
-          yPercent: 8,
-          ease: 'none',
-          scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: .8 },
-        })
+        if (!media.classList.contains('dashboard')) {
+          gsap.to(row.querySelector('.project-image'), {
+            yPercent: 8,
+            ease: 'none',
+            scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: .8 },
+          })
+        }
       })
 
       gsap.from('.timeline article', {
@@ -291,7 +293,7 @@ export default function App() {
           <div className="projects-list">
             {orderedProjects.map((project, index) => (
               <article className="project-row" key={project.id}>
-                <a className={project.isMobile ? 'project-media mobile' : 'project-media'} href={project.link} target="_blank" rel="noreferrer">
+                <a className={`project-media${project.isMobile ? ' mobile' : ''}${project.id === 'dash' ? ' dashboard' : ''}`} href={project.link} target="_blank" rel="noreferrer">
                   {project.isMobile && <img className="project-blur" src={project.image} alt="" aria-hidden="true" />}
                   <img className="project-image" src={project.image} alt={`Preview de ${project.title}`} loading="lazy" />
                   <span className="project-number">0{index + 1}</span>
