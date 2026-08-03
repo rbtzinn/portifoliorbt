@@ -654,22 +654,43 @@ footer a { justify-self: end; color: var(--mint); }
 @media (max-width: 720px) {
   html { scroll-padding-top: 78px; }
   .topbar { top: 10px; width: calc(100% - 20px); height: 58px; padding: 6px 7px 6px 8px; gap: 12px; border-radius: 18px; }
+  .topbar.menu-is-open {
+    z-index: 600;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    min-height: 100svh;
+    padding: max(10px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom));
+    align-items: start;
+    overflow: hidden;
+    background: var(--ink);
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transform: none;
+  }
   .monogram { width: 44px; height: 44px; }
   .topbar-location { display: none; }
   .menu-toggle { display: block; }
   .topbar-side { justify-self: end; }
+  .topbar.menu-is-open .monogram,
+  .topbar.menu-is-open .topbar-side { position: relative; z-index: 2; }
 
   .nav {
-    position: fixed;
-    z-index: -1;
+    position: absolute;
+    z-index: 1;
     inset: 0;
-    padding: 104px 22px max(28px, env(safe-area-inset-bottom));
+    padding: calc(84px + env(safe-area-inset-top)) 22px max(24px, env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 0;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
     color: var(--paper);
     background:
       radial-gradient(circle at 106% 8%, rgba(183, 167, 255, .25), transparent 18rem),
@@ -681,8 +702,10 @@ footer a { justify-self: end; color: var(--mint); }
     transition: opacity .25s ease, visibility .25s ease, transform .25s ease;
   }
 
+  .nav::-webkit-scrollbar { display: none; }
+
   .nav.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
-  .nav a, .nav .nav-cv { min-height: 68px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line-light); color: var(--paper); font-size: clamp(1.75rem, 9vw, 3rem); font-weight: 600; letter-spacing: -.05em; }
+  .nav a, .nav .nav-cv { min-height: clamp(58px, 11svh, 76px); display: flex; justify-content: space-between; border-bottom: 1px solid var(--line-light); color: var(--paper); font-size: clamp(1.75rem, min(9vw, 7svh), 3rem); font-weight: 600; letter-spacing: -.05em; }
   .nav a::after { display: none; }
   .nav .nav-cv { margin-top: 18px; padding: 0 18px; color: var(--ink); background: var(--coral); border: 0; border-radius: 14px; font: 600 .72rem var(--mono); letter-spacing: .02em; text-transform: uppercase; }
 
