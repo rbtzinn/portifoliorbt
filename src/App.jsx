@@ -198,7 +198,10 @@ export default function App() {
 
     if (!menuOpen) return () => document.body.classList.remove('menu-open')
 
-    const focusable = [...navRef.current.querySelectorAll('a[href]')]
+    const focusable = [
+      ...navRef.current.querySelectorAll('a[href]'),
+      menuButtonRef.current,
+    ].filter(Boolean)
     const firstItem = focusable[0]
     const lastItem = focusable.at(-1)
     const focusTimer = window.setTimeout(() => firstItem?.focus(), 60)
@@ -226,6 +229,16 @@ export default function App() {
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [menuOpen])
+
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 721px)')
+    const closeMenuOnDesktop = (event) => {
+      if (event.matches) setMenuOpen(false)
+    }
+
+    desktop.addEventListener('change', closeMenuOnDesktop)
+    return () => desktop.removeEventListener('change', closeMenuOnDesktop)
+  }, [])
 
   useLayoutEffect(() => {
     const media = gsap.matchMedia()
