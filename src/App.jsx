@@ -1,9 +1,7 @@
-import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './styles/tailwind.css'
-
-const HeroScene = lazy(() => import('./components/ui/HeroScene'))
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -254,20 +252,13 @@ export default function App() {
         intro
           .from('.masthead-word__inner', { yPercent: 112, duration: 1.15, stagger: 0.09 })
           .from('.hero-intro > *', { opacity: 0, y: 24, duration: 0.7, stagger: 0.08 }, '-=.78')
-          .from('.hero-object', { opacity: 0, scale: 0.74, rotate: -8, duration: 1.2 }, '-=.92')
+          .from('.hero-showcase', { opacity: 0, y: 28, duration: 0.9 }, '-=.86')
           .from('.hero-bottom', { opacity: 0, y: 18, duration: 0.65 }, '-=.72')
 
         gsap.to('.scroll-progress', {
           scaleX: 1,
           ease: 'none',
           scrollTrigger: { start: 0, end: 'max', scrub: 0.25 },
-        })
-
-        gsap.to('.hero-object', {
-          yPercent: 20,
-          rotate: 6,
-          ease: 'none',
-          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 },
         })
 
         gsap.utils.toArray('[data-reveal]').forEach((element) => {
@@ -357,12 +348,23 @@ export default function App() {
             <span className="masthead-word masthead-word--serif"><span className="masthead-word__inner">Miranda</span></span>
           </h1>
 
-          <div className="hero-object" aria-hidden="true">
-            <Suspense fallback={<div className="scene-placeholder" />}>
-              <HeroScene />
-            </Suspense>
-            <span className="object-label">Código · movimento · produto</span>
-          </div>
+          <article className="hero-showcase">
+            <div className="hero-showcase__bar">
+              <span>Case em destaque</span>
+              <span>Em produção · 2026</span>
+            </div>
+            <a className="hero-showcase__screen" href={projects[0].link} target="_blank" rel="noreferrer" aria-label="Abrir Dashboard Cultural em uma nova aba">
+              <img src={projects[0].image} alt="Dashboard Cultural da EMPETUR" width="1637" height="931" decoding="async" fetchPriority="high" />
+              <span>Abrir case <Arrow /></span>
+            </a>
+            <div className="hero-showcase__caption">
+              <div>
+                <small>EMPETUR · Dados públicos</small>
+                <h2>Dashboard Cultural</h2>
+              </div>
+              <p>Indicadores e mapas transformados em uma consulta visual, direta e transparente.</p>
+            </div>
+          </article>
 
           <div className="hero-bottom">
             <span className="availability"><i aria-hidden="true" /> Disponível para oportunidades</span>
