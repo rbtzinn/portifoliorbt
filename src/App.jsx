@@ -135,6 +135,7 @@ export default function App() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reducedMotion) return undefined
 
+    const responsiveMotion = gsap.matchMedia()
     const context = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: 'power3.out' } })
       intro
@@ -168,44 +169,6 @@ export default function App() {
         })
       })
 
-      const projectRows = gsap.utils.toArray('.project-row')
-      const desktopStack = window.matchMedia('(min-width: 1081px)').matches
-
-      if (desktopStack && projectRows.length > 1) {
-        gsap.set(projectRows.slice(1), { yPercent: 105 })
-
-        const stackTimeline = gsap.timeline({
-          defaults: { ease: 'none' },
-          scrollTrigger: {
-            trigger: '.projects-list',
-            start: 'top 92px',
-            end: () => `+=${window.innerHeight * (projectRows.length - 1)}`,
-            scrub: .8,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        })
-
-        projectRows.slice(1).forEach((row, index) => {
-          const previous = projectRows[index]
-          const position = index
-          stackTimeline
-            .to(previous, { scale: .965, opacity: .42, transformOrigin: 'center top', duration: 1 }, position)
-            .to(row, { yPercent: 0, duration: 1 }, position)
-        })
-      } else {
-        projectRows.forEach((row) => {
-          gsap.from(row, {
-            opacity: 0,
-            y: 42,
-            duration: .75,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: row, start: 'top 84%' },
-          })
-        })
-      }
-
       gsap.from('.timeline article', {
         opacity: 0,
         x: -28,
@@ -231,7 +194,52 @@ export default function App() {
       })
     }, appRef)
 
-    return () => context.revert()
+    responsiveMotion.add('(min-width: 1081px)', () => {
+      const projectRows = gsap.utils.toArray('.project-row', appRef.current)
+      if (projectRows.length > 1) {
+        gsap.set(projectRows.slice(1), { yPercent: 105 })
+
+        const stackTimeline = gsap.timeline({
+          defaults: { ease: 'none' },
+          scrollTrigger: {
+            trigger: '.projects-list',
+            start: 'top 92px',
+            end: () => `+=${window.innerHeight * (projectRows.length - 1)}`,
+            scrub: .8,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        })
+
+        projectRows.slice(1).forEach((row, index) => {
+          const previous = projectRows[index]
+          const position = index
+          stackTimeline
+            .to(previous, { scale: .965, opacity: .42, transformOrigin: 'center top', duration: 1 }, position)
+            .to(row, { yPercent: 0, duration: 1 }, position)
+        })
+      }
+    }, appRef)
+
+    responsiveMotion.add('(max-width: 1080px)', () => {
+      const projectRows = gsap.utils.toArray('.project-row', appRef.current)
+      gsap.set(projectRows, { clearProps: 'transform,opacity' })
+      projectRows.forEach((row) => {
+        gsap.from(row, {
+          opacity: 0,
+          y: 32,
+          duration: .65,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: row, start: 'top 88%' },
+        })
+      })
+    }, appRef)
+
+    return () => {
+      responsiveMotion.revert()
+      context.revert()
+    }
   }, [])
 
   const closeMenu = () => setMenuOpen(false)
@@ -368,7 +376,7 @@ export default function App() {
           <p>{text.contactCopy}</p>
           <div className="contact-actions">
             <a className="button light" href={`mailto:${LINKS.email}`}>{text.email} <Arrow /></a>
-            <button className="button outline" onClick={copyEmail}>{copied ? text.copied : text.copy}</button>
+            <button className="button outline" onClick={copyEmail}><span aria-live="polite">{copied ? text.copied : text.copy}</span></button>
           </div>
           <a className="contact-email" href={`mailto:${LINKS.email}`}>{LINKS.email}</a>
         </section>
