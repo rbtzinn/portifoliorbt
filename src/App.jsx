@@ -292,7 +292,11 @@ export default function App() {
 
           <div className="projects-list">
             {orderedProjects.map((project, index) => (
-              <article className="project-row" key={project.id}>
+              <article
+                className="project-row"
+                key={project.id}
+                style={{ '--stack-top': `${92 + index * 8}px`, zIndex: index + 1 }}
+              >
                 <a className={`project-media${project.isMobile ? ' mobile' : ''}${project.id === 'dash' ? ' dashboard' : ''}`} href={project.link} target="_blank" rel="noreferrer">
                   {project.isMobile && <img className="project-blur" src={project.image} alt="" aria-hidden="true" />}
                   <img className="project-image" src={project.image} alt={`Preview de ${project.title}`} loading="lazy" />
