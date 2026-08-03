@@ -1,401 +1,486 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { LINKS, projects, techGroups } from './data/portfolioData'
-import HeroScene from './components/ui/HeroScene'
 import './styles/tailwind.css'
+
+const HeroScene = lazy(() => import('./components/ui/HeroScene'))
 
 gsap.registerPlugin(ScrollTrigger)
 
-const content = {
-  pt: {
-    nav: ['Projetos', 'Experiência', 'Sobre', 'Contato'],
-    eyebrow: 'Desenvolvedor Frontend · Recife, Brasil',
-    titleA: 'Produtos digitais',
-    titleB: 'claros, rápidos',
-    titleC: 'e bem construídos.',
-    intro: 'Transformo necessidades reais em interfaces responsivas e confiáveis — de dashboards governamentais a e-commerces e aplicações mobile.',
-    work: 'Conhecer projetos',
-    contact: 'Falar comigo',
-    availability: 'Disponível para novas oportunidades',
-    featured: 'Case em destaque',
-    featuredCopy: 'Dados públicos complexos transformados em uma experiência clara de consulta e transparência.',
-    live: 'Ver projeto ao vivo',
-    proof: [
-      ['5', 'projetos selecionados'],
-      ['4+', 'anos construindo soluções'],
-      ['Web + Mobile', 'experiência multidisciplinar'],
-    ],
-    projectsLabel: 'Trabalho selecionado',
-    projectsTitle: 'Projetos feitos para funcionar no mundo real.',
-    projectsIntro: 'Uma seleção de produtos em produção e projetos autorais, com decisões de interface, integração e engenharia explicadas sem ruído.',
-    open: 'Abrir projeto',
-    result: 'Principais entregas',
-    experienceLabel: 'Experiência',
-    experienceTitle: 'Tecnologia aplicada a produto, dados e operação.',
-    aboutLabel: 'Sobre',
-    aboutTitle: 'Frontend com visão de produto e responsabilidade de entrega.',
-    aboutCopy: 'Sou Roberto Miranda, graduado em Ciência da Computação. Minha experiência combina desenvolvimento frontend, visualização de dados, aplicações mobile e tecnologia aplicada a processos públicos. Gosto de entender o problema antes de escrever código e de entregar interfaces que sejam simples para quem usa e sustentáveis para quem mantém.',
-    stackLabel: 'Competências',
-    stackTitle: 'Tecnologias que sustentam meu trabalho',
-    contactLabel: 'Vamos conversar',
-    contactTitle: 'Tem um desafio em frontend ou produto digital?',
-    contactCopy: 'Estou aberto a oportunidades remotas ou híbridas, projetos freelance e boas conversas sobre tecnologia.',
-    email: 'Enviar e-mail',
-    copy: 'Copiar e-mail',
-    copied: 'E-mail copiado',
-    cv: 'Baixar currículo',
-    current: 'Atual',
-    footer: 'Projetado e desenvolvido por Roberto Miranda.',
-  },
-  en: {
-    nav: ['Projects', 'Experience', 'About', 'Contact'],
-    eyebrow: 'Frontend Developer · Recife, Brazil',
-    titleA: 'Digital products',
-    titleB: 'that feel clear,',
-    titleC: 'fast and solid.',
-    intro: 'I turn real needs into responsive, reliable interfaces — from government dashboards to e-commerce and mobile applications.',
-    work: 'Explore projects',
-    contact: 'Get in touch',
-    availability: 'Available for new opportunities',
-    featured: 'Featured case',
-    featuredCopy: 'Complex public data transformed into a clear experience for research and transparency.',
-    live: 'View live project',
-    proof: [
-      ['5', 'selected projects'],
-      ['4+', 'years building solutions'],
-      ['Web + Mobile', 'multidisciplinary experience'],
-    ],
-    projectsLabel: 'Selected work',
-    projectsTitle: 'Projects built to work in the real world.',
-    projectsIntro: 'A selection of production products and personal work, showing interface, integration, and engineering decisions without the noise.',
-    open: 'Open project',
-    result: 'Key outcomes',
-    experienceLabel: 'Experience',
-    experienceTitle: 'Technology applied to product, data, and operations.',
-    aboutLabel: 'About',
-    aboutTitle: 'Frontend expertise with product thinking and delivery ownership.',
-    aboutCopy: 'I am Roberto Miranda, a Computer Science graduate. My experience combines frontend development, data visualization, mobile applications, and technology applied to public processes. I understand the problem before writing code and build interfaces that are simple to use and sustainable to maintain.',
-    stackLabel: 'Capabilities',
-    stackTitle: 'Technologies behind my work',
-    contactLabel: 'Let’s talk',
-    contactTitle: 'Have a frontend or digital product challenge?',
-    contactCopy: 'I am open to remote or hybrid opportunities, freelance projects, and good conversations about technology.',
-    email: 'Send email',
-    copy: 'Copy email',
-    copied: 'Email copied',
-    cv: 'Download résumé',
-    current: 'Present',
-    footer: 'Designed and developed by Roberto Miranda.',
-  },
+const LINKS = {
+  email: 'rbtgabriel04@gmail.com',
+  github: 'https://github.com/rbtzinn',
+  linkedin: 'https://www.linkedin.com/in/roberto-gabriel-ara%C3%BAjo-miranda/',
+  resume: '/assets/Roberto_GabrielCV.pdf',
 }
 
-const experiences = {
-  pt: [
-    ['Gestor Técnico — Compliance (TI & IA)', 'Administração de Suape', 'Jul 2026 — Atual', 'Tecnologia, automação e inteligência artificial aplicadas a controles internos, análise de dados e mitigação de riscos.'],
-    ['Desenvolvedor Frontend Júnior', 'EMPETUR', '2025 — Atual', 'Dashboards analíticos e indicadores com React, Next.js, TypeScript, D3.js e integração de dados governamentais.'],
-    ['Apoio Administrativo', 'RM Terceirizações · CGE-PE', '2024 — 2025', 'Organização de dados, processos e documentos com foco em rastreabilidade, controle operacional e prazos.'],
-    ['Desenvolvedor Full Stack Freelance', 'Smartracker Tecnologias', '2022 — 2024', 'Aplicativo Android de inventário RFID com leitura em tempo real, tratamento de dados e relatórios em CSV.'],
-    ['Estagiário de Suporte de TI', 'Controladoria Geral do Estado', '2022 — 2024', 'Suporte em hardware, software e redes, inventário de ativos e gestão do ciclo de chamados.'],
-  ],
-  en: [
-    ['Technical Manager — Compliance (IT & AI)', 'Suape Port Administration', 'Jul 2026 — Present', 'Technology, automation, and AI applied to internal controls, data analysis, and risk mitigation.'],
-    ['Junior Frontend Developer', 'EMPETUR', '2025 — Present', 'Analytics dashboards and indicators using React, Next.js, TypeScript, D3.js, and government data integrations.'],
-    ['Administrative Support', 'RM Terceirizações · State Comptroller', '2024 — 2025', 'Data, process, and document organization focused on traceability, operational control, and deadlines.'],
-    ['Freelance Full Stack Developer', 'Smartracker Tecnologias', '2022 — 2024', 'Android RFID inventory app with real-time reading, data processing, and CSV reports.'],
-    ['IT Support Intern', 'State Comptroller', '2022 — 2024', 'Hardware, software, and network support, asset inventory, and ticket lifecycle management.'],
-  ],
+const projects = [
+  {
+    title: 'Dashboard Cultural',
+    kind: 'Dados públicos · produto em produção',
+    client: 'EMPETUR',
+    date: '2026',
+    image: '/assets/media/projects/emeptur-painel.png',
+    link: 'https://empetur-painel.vercel.app',
+    description: 'Uma plataforma analítica que transforma bases governamentais complexas em uma consulta simples, visual e transparente.',
+    impact: ['Mapa interativo de Pernambuco com D3.js', 'Normalização de dados públicos não estruturados', 'Indicadores e filtros para tomada de decisão'],
+    stack: ['React', 'TypeScript', 'D3.js', 'PapaParse'],
+    tone: 'sky',
+    fit: 'contain',
+  },
+  {
+    title: 'LUXE Store',
+    kind: 'E-commerce · experiência editorial',
+    client: 'Projeto autoral',
+    date: '2026',
+    image: '/assets/media/projects/luxe-store.png',
+    link: 'https://luxestore-eight.vercel.app/',
+    description: 'E-commerce bilíngue com catálogo dinâmico, direção visual premium e uma experiência de compra fluida em qualquer tela.',
+    impact: ['Catálogo integrado à DummyJSON', 'Internacionalização completa PT-BR e EN', 'Navegação responsiva orientada à conversão'],
+    stack: ['React', 'TypeScript', 'Tailwind', 'i18n'],
+    tone: 'coral',
+    fit: 'cover',
+  },
+  {
+    title: 'APP/WEB de Frotas',
+    kind: 'Operação logística · mobile first',
+    client: 'Logistics Corp',
+    date: '2026',
+    image: '/assets/media/projects/frotas-demo.png',
+    link: 'https://frotasapp.vercel.app',
+    description: 'Controle de frotas com assinatura digital, funcionamento offline e sincronização automática para equipes em campo.',
+    impact: ['Assinatura capturada em canvas', 'Fila offline com sincronização automática', 'Integração com Google Sheets'],
+    stack: ['Flutter', 'Dart', 'Apps Script', 'Offline'],
+    tone: 'mint',
+    fit: 'contain',
+  },
+  {
+    title: 'StreamVibe',
+    kind: 'Entretenimento · produto autoral',
+    client: 'Projeto autoral',
+    date: '2026',
+    image: '/assets/media/projects/streamvibe.png',
+    link: 'https://films-port.vercel.app',
+    description: 'Catálogo de filmes com descoberta de conteúdo, detalhes, trailers e uma lista pessoal que permanece entre sessões.',
+    impact: ['Dados em tempo real pela API TMDB', 'Destaques editoriais dinâmicos', 'Favoritos persistidos localmente'],
+    stack: ['React', 'TypeScript', 'TMDB API', 'Vite'],
+    tone: 'lilac',
+    fit: 'cover',
+  },
+  {
+    title: 'Leitor de RFID',
+    kind: 'Inventário · aplicação Android',
+    client: 'Novo Atacarejo',
+    date: '2025',
+    image: '/assets/media/projects/rfid-novo.png',
+    link: 'https://github.com/rbtzinn/RFID-NovoAtacarejo',
+    description: 'Aplicação implantada em loja para acelerar inventários através da leitura de etiquetas RFID em tempo real.',
+    impact: ['Integração direta com hardware RFID', 'Relatórios de inventário em CSV', 'Processamento e conferência de estoque'],
+    stack: ['Java', 'Android', 'RFID', 'SQLite'],
+    tone: 'sun',
+    fit: 'phone',
+  },
+]
+
+const experience = [
+  {
+    role: 'Gestor Técnico — Compliance (TI & IA)',
+    company: 'Administração de Suape',
+    period: 'Jul 2026 — agora',
+    description: 'Tecnologia, automação e inteligência artificial aplicadas a controles internos, análise de dados e mitigação de riscos.',
+  },
+  {
+    role: 'Desenvolvedor Frontend Júnior',
+    company: 'EMPETUR',
+    period: '2025 — agora',
+    description: 'Dashboards analíticos, visualização de dados e interfaces públicas construídas com React, Next.js, TypeScript e D3.js.',
+  },
+  {
+    role: 'Apoio Administrativo',
+    company: 'RM Terceirizações · CGE-PE',
+    period: '2024 — 2025',
+    description: 'Organização de processos e dados com foco em rastreabilidade, controle operacional e cumprimento de prazos.',
+  },
+  {
+    role: 'Desenvolvedor Full Stack Freelance',
+    company: 'Smartracker Tecnologias',
+    period: '2022 — 2024',
+    description: 'Desenvolvimento de uma solução Android para inventário RFID, processamento de dados e relatórios operacionais.',
+  },
+  {
+    role: 'Estagiário de Suporte de TI',
+    company: 'Controladoria Geral do Estado',
+    period: '2022 — 2024',
+    description: 'Suporte a hardware, software e redes, inventário de ativos e acompanhamento do ciclo de chamados.',
+  },
+]
+
+const skillGroups = [
+  {
+    label: 'Interfaces',
+    description: 'React · TypeScript · Next.js · JavaScript · HTML semântico · CSS / Sass · Tailwind',
+  },
+  {
+    label: 'Produto visual',
+    description: 'Figma · Design responsivo · Acessibilidade · D3.js · GSAP · Three.js · Design systems',
+  },
+  {
+    label: 'Aplicações',
+    description: 'React Native · Flutter · Dart · Java Android · Node.js · PostgreSQL · Git',
+  },
+]
+
+function Arrow({ direction = 'up' }) {
+  return <span aria-hidden="true">{direction === 'down' ? '↓' : '↗'}</span>
 }
 
-const projectOrder = ['dash', 'luxe-store', 'frotas', 'filmsport', 'rfid']
+function ProjectCard({ project, index }) {
+  const order = String(index + 1).padStart(2, '0')
 
-function Arrow() {
-  return <span aria-hidden="true">↗</span>
+  return (
+    <article className={`project-card project-card--${project.tone}`} style={{ '--card-index': index }}>
+      <div className="project-card__topline">
+        <span>{project.kind}</span>
+        <span>{order} / {String(projects.length).padStart(2, '0')}</span>
+      </div>
+
+      <div className="project-card__grid">
+        <a
+          className={`project-visual project-visual--${project.fit}`}
+          href={project.link}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`Abrir ${project.title} em uma nova aba`}
+        >
+          <span className="project-visual__chrome" aria-hidden="true"><i /><i /><i /></span>
+          <img
+            src={project.image}
+            alt={`Interface do projeto ${project.title}`}
+            loading="lazy"
+            decoding="async"
+            width="1600"
+            height="900"
+          />
+          <span className="project-visual__action">Visitar projeto <Arrow /></span>
+        </a>
+
+        <div className="project-info">
+          <div className="project-meta">
+            <span>{project.client}</span>
+            <span>{project.date}</span>
+          </div>
+          <h3>{project.title}</h3>
+          <p>{project.description}</p>
+          <ul aria-label={`Destaques de ${project.title}`}>
+            {project.impact.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+          <div className="project-footer">
+            <div className="project-tags" aria-label="Tecnologias">
+              {project.stack.map((item) => <span key={item}>{item}</span>)}
+            </div>
+            <a href={project.link} target="_blank" rel="noreferrer">Abrir projeto <Arrow /></a>
+          </div>
+        </div>
+      </div>
+    </article>
+  )
 }
 
 export default function App() {
-  const appRef = useRef(null)
-  const [lang, setLang] = useState(() => localStorage.getItem('portfolioLang') || 'pt')
+  const rootRef = useRef(null)
+  const navRef = useRef(null)
+  const menuButtonRef = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [copied, setCopied] = useState(false)
-  const text = content[lang]
-  const orderedProjects = projectOrder.map((id) => projects.find((project) => project.id === id)).filter(Boolean)
-
-  useEffect(() => {
-    localStorage.setItem('portfolioLang', lang)
-    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en'
-  }, [lang])
 
   useEffect(() => {
     document.body.classList.toggle('menu-open', menuOpen)
-    return () => document.body.classList.remove('menu-open')
-  }, [menuOpen])
 
-  useEffect(() => {
-    if (!menuOpen) return undefined
-    const closeOnEscape = (event) => {
-      if (event.key === 'Escape') setMenuOpen(false)
+    if (!menuOpen) return () => document.body.classList.remove('menu-open')
+
+    const focusable = [...navRef.current.querySelectorAll('a[href]')]
+    const firstItem = focusable[0]
+    const lastItem = focusable.at(-1)
+    const focusTimer = window.setTimeout(() => firstItem?.focus(), 60)
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false)
+        menuButtonRef.current?.focus()
+      }
+
+      if (event.key !== 'Tab' || focusable.length === 0) return
+      if (event.shiftKey && document.activeElement === firstItem) {
+        event.preventDefault()
+        lastItem.focus()
+      } else if (!event.shiftKey && document.activeElement === lastItem) {
+        event.preventDefault()
+        firstItem.focus()
+      }
     }
-    window.addEventListener('keydown', closeOnEscape)
-    return () => window.removeEventListener('keydown', closeOnEscape)
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      window.clearTimeout(focusTimer)
+      document.body.classList.remove('menu-open')
+      window.removeEventListener('keydown', handleKeyDown)
+    }
   }, [menuOpen])
 
   useLayoutEffect(() => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reducedMotion) return undefined
+    const media = gsap.matchMedia()
 
-    const responsiveMotion = gsap.matchMedia()
-    const context = gsap.context(() => {
-      const intro = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      intro
-        .from('.hero-kicker', { opacity: 0, y: 18, duration: .65 })
-        .from('.hero h1 span', { opacity: 0, yPercent: 110, rotate: 2, duration: .9, stagger: .1 }, '-=.4')
-        .from('.hero-copy > p, .hero-actions, .availability', { opacity: 0, y: 20, duration: .65, stagger: .08 }, '-=.55')
-        .from('.hero-visual', { opacity: 0, scale: .9, duration: 1.1 }, '-=.95')
+    media.add(
+      {
+        allowMotion: '(prefers-reduced-motion: no-preference)',
+        desktop: '(min-width: 900px)',
+      },
+      ({ conditions }) => {
+        if (!conditions.allowMotion) return undefined
 
-      gsap.to('.hero-visual', {
-        yPercent: 12,
-        ease: 'none',
-        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 },
-      })
+        const intro = gsap.timeline({ defaults: { ease: 'power4.out' } })
+        intro
+          .from('.masthead-word__inner', { yPercent: 112, duration: 1.15, stagger: 0.09 })
+          .from('.hero-intro > *', { opacity: 0, y: 24, duration: 0.7, stagger: 0.08 }, '-=.78')
+          .from('.hero-object', { opacity: 0, scale: 0.74, rotate: -8, duration: 1.2 }, '-=.92')
+          .from('.hero-bottom', { opacity: 0, y: 18, duration: 0.65 }, '-=.72')
 
-      gsap.from('.proof-row > div', {
-        opacity: 0,
-        y: 28,
-        stagger: .12,
-        duration: .7,
-        scrollTrigger: { trigger: '.proof-row', start: 'top 86%' },
-      })
-
-      gsap.utils.toArray('.section-intro').forEach((heading) => {
-        gsap.from(heading.children, {
-          opacity: 0,
-          y: 34,
-          stagger: .1,
-          duration: .8,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: heading, start: 'top 82%' },
-        })
-      })
-
-      gsap.from('.timeline article', {
-        opacity: 0,
-        x: -28,
-        stagger: .1,
-        duration: .65,
-        scrollTrigger: { trigger: '.timeline', start: 'top 82%' },
-      })
-
-      gsap.from('.about-main, .skills-panel', {
-        opacity: 0,
-        y: 44,
-        stagger: .15,
-        duration: .85,
-        scrollTrigger: { trigger: '.about-section', start: 'top 78%' },
-      })
-
-      gsap.from('.contact-section > *', {
-        opacity: 0,
-        y: 34,
-        stagger: .1,
-        duration: .75,
-        scrollTrigger: { trigger: '.contact-section', start: 'top 80%' },
-      })
-    }, appRef)
-
-    responsiveMotion.add('(min-width: 1081px)', () => {
-      const projectRows = gsap.utils.toArray('.project-row', appRef.current)
-      if (projectRows.length > 1) {
-        gsap.set(projectRows.slice(1), { yPercent: 105 })
-
-        const stackTimeline = gsap.timeline({
-          defaults: { ease: 'none' },
-          scrollTrigger: {
-            trigger: '.projects-list',
-            start: 'top 92px',
-            end: () => `+=${window.innerHeight * (projectRows.length - 1)}`,
-            scrub: .8,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
+        gsap.to('.scroll-progress', {
+          scaleX: 1,
+          ease: 'none',
+          scrollTrigger: { start: 0, end: 'max', scrub: 0.25 },
         })
 
-        projectRows.slice(1).forEach((row, index) => {
-          const previous = projectRows[index]
-          const position = index
-          stackTimeline
-            .to(previous, { scale: .965, opacity: .42, transformOrigin: 'center top', duration: 1 }, position)
-            .to(row, { yPercent: 0, duration: 1 }, position)
+        gsap.to('.hero-object', {
+          yPercent: 20,
+          rotate: 6,
+          ease: 'none',
+          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 },
         })
-      }
-    }, appRef)
 
-    responsiveMotion.add('(max-width: 1080px)', () => {
-      const projectRows = gsap.utils.toArray('.project-row', appRef.current)
-      gsap.set(projectRows, { clearProps: 'transform,opacity' })
-      projectRows.forEach((row) => {
-        gsap.from(row, {
-          opacity: 0,
-          y: 32,
-          duration: .65,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: row, start: 'top 88%' },
+        gsap.utils.toArray('[data-reveal]').forEach((element) => {
+          gsap.from(element, {
+            opacity: 0,
+            y: 42,
+            duration: 0.9,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: element, start: 'top 86%', once: true },
+          })
         })
-      })
-    }, appRef)
 
-    return () => {
-      responsiveMotion.revert()
-      context.revert()
-    }
+        gsap.utils.toArray('.project-visual').forEach((element) => {
+          gsap.from(element, {
+            clipPath: 'inset(0 0 100% 0 round 24px)',
+            duration: 1.05,
+            ease: 'power4.inOut',
+            scrollTrigger: { trigger: element, start: 'top 84%', once: true },
+          })
+        })
+
+        if (conditions.desktop) {
+          const cards = gsap.utils.toArray('.project-card')
+          cards.slice(0, -1).forEach((card, index) => {
+            gsap.to(card, {
+              scale: 0.955,
+              filter: 'brightness(.72) saturate(.76)',
+              ease: 'none',
+              scrollTrigger: {
+                trigger: cards[index + 1],
+                start: 'top bottom',
+                end: 'top 108px',
+                scrub: true,
+              },
+            })
+          })
+        }
+
+        let cancelled = false
+        document.fonts?.ready.then(() => {
+          if (!cancelled) ScrollTrigger.refresh()
+        })
+
+        return () => {
+          cancelled = true
+        }
+      },
+    )
+
+    return () => media.revert()
   }, [])
 
-  const closeMenu = () => setMenuOpen(false)
   const copyEmail = async () => {
-    await navigator.clipboard.writeText(LINKS.email)
-    setCopied(true)
-    window.setTimeout(() => setCopied(false), 2200)
+    try {
+      await navigator.clipboard.writeText(LINKS.email)
+      setCopied(true)
+      window.setTimeout(() => setCopied(false), 1800)
+    } catch {
+      window.location.href = `mailto:${LINKS.email}`
+    }
   }
 
+  const closeMenu = () => setMenuOpen(false)
+
   return (
-    <div className="site-shell" ref={appRef}>
-      <header className={menuOpen ? 'site-header menu-active' : 'site-header'}>
-        <div className="header-inner">
-          <a className="brand" href="#inicio" aria-label="Roberto Miranda — início" onClick={closeMenu}>
-            <span>RM</span>
-            <div><strong>Roberto Miranda</strong><small>Frontend Developer</small></div>
-          </a>
+    <div className="portfolio" ref={rootRef}>
+      <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
+      <div className="scroll-progress" aria-hidden="true" />
 
-          <nav id="main-navigation" className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label="Navegação principal">
-            {['projetos', 'experiencia', 'sobre', 'contato'].map((target, index) => (
-              <a href={`#${target}`} key={target} onClick={closeMenu}><span>0{index + 1}</span>{text.nav[index]}</a>
-            ))}
-            <div className="mobile-nav-status"><i />{text.availability}</div>
-          </nav>
+      <header className={menuOpen ? 'topbar menu-is-open' : 'topbar'}>
+        <a className="monogram" href="#inicio" onClick={closeMenu} aria-label="Roberto Miranda — início">RM</a>
 
-          <div className="header-actions">
-            <div className="language-switch" aria-label="Selecionar idioma">
-              <button className={lang === 'pt' ? 'active' : ''} onClick={() => setLang('pt')}>PT</button>
-              <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
-            </div>
-            <a className="header-cv" href={LINKS.resume} target="_blank" rel="noreferrer">CV <Arrow /></a>
-            <button className={menuOpen ? 'menu-button is-open' : 'menu-button'} onClick={() => setMenuOpen((value) => !value)} aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={menuOpen} aria-controls="main-navigation"><i /><i /></button>
-          </div>
+        <nav
+          className={menuOpen ? 'nav is-open' : 'nav'}
+          id="navigation"
+          ref={navRef}
+          aria-label="Navegação principal"
+        >
+          <a href="#projetos" onClick={closeMenu}>Projetos</a>
+          <a href="#experiencia" onClick={closeMenu}>Experiência</a>
+          <a href="#sobre" onClick={closeMenu}>Sobre</a>
+          <a href="#contato" onClick={closeMenu}>Contato</a>
+          <a className="nav-cv" href={LINKS.resume} target="_blank" rel="noreferrer">Currículo <Arrow /></a>
+        </nav>
+
+        <div className="topbar-side">
+          <span className="topbar-location">Recife · Brasil</span>
+          <button
+            className="menu-toggle"
+            ref={menuButtonRef}
+            type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-expanded={menuOpen}
+            aria-controls="navigation"
+            aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
+          >
+            <span /><span />
+          </button>
         </div>
       </header>
 
-      <main>
-        <section className="hero" id="inicio">
-          <div className="hero-copy">
-            <div className="hero-kicker"><span />{text.eyebrow}</div>
-            <h1><span>{text.titleA}</span><span><em>{text.titleB}</em></span><span>{text.titleC}</span></h1>
-            <p>{text.intro}</p>
-            <div className="hero-actions">
-              <a className="button primary" href="#projetos">{text.work} <Arrow /></a>
-              <a className="button secondary" href={`mailto:${LINKS.email}`}>{text.contact}</a>
-            </div>
-            <div className="availability"><span />{text.availability}</div>
+      <main id="conteudo">
+        <section className="hero" id="inicio" aria-labelledby="hero-title">
+          <div className="hero-pattern" aria-hidden="true" />
+
+          <div className="hero-intro">
+            <p className="eyebrow"><i aria-hidden="true" /> Frontend developer & creative coder</p>
+            <p className="hero-statement">Transformo dados, regras e ideias em produtos digitais claros, rápidos e agradáveis de usar.</p>
           </div>
 
-          <div className="hero-visual">
-            <HeroScene />
+          <h1 className="masthead" id="hero-title" aria-label="Roberto Miranda">
+            <span className="masthead-word"><span className="masthead-word__inner">Roberto</span></span>
+            <span className="masthead-word masthead-word--serif"><span className="masthead-word__inner">Miranda</span></span>
+          </h1>
+
+          <div className="hero-object" aria-hidden="true">
+            <Suspense fallback={<div className="scene-placeholder" />}>
+              <HeroScene />
+            </Suspense>
+            <span className="object-label">Código · movimento · produto</span>
+          </div>
+
+          <div className="hero-bottom">
+            <span className="availability"><i aria-hidden="true" /> Disponível para oportunidades</span>
+            <a href="#projetos">Ver projetos <Arrow direction="down" /></a>
           </div>
         </section>
 
-        <section className="proof-row" aria-label="Resumo profissional">
-          {text.proof.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
-        </section>
+        <div className="ticker" aria-hidden="true">
+          <div>
+            <span>Interfaces com intenção</span><i>✦</i>
+            <span>React & TypeScript</span><i>✦</i>
+            <span>Dados que fazem sentido</span><i>✦</i>
+            <span>Movimento com propósito</span><i>✦</i>
+            <span>Interfaces com intenção</span><i>✦</i>
+            <span>React & TypeScript</span><i>✦</i>
+            <span>Dados que fazem sentido</span><i>✦</i>
+            <span>Movimento com propósito</span><i>✦</i>
+          </div>
+        </div>
 
-        <section className="section projects-section" id="projetos" data-reveal>
-          <div className="section-intro">
-            <p className="section-label">01 · {text.projectsLabel}</p>
-            <h2>{text.projectsTitle}</h2>
-            <p>{text.projectsIntro}</p>
+        <section className="projects" id="projetos" aria-labelledby="projects-title">
+          <div className="section-heading" data-reveal>
+            <p className="eyebrow">Trabalho selecionado · 2025—2026</p>
+            <h2 id="projects-title">Produtos que já<br /><em>saíram da ideia.</em></h2>
+            <p>Projetos reais e autorais apresentados pelo problema resolvido, pela experiência criada e pela engenharia que sustenta cada entrega.</p>
           </div>
 
-          <div className="projects-list">
-            {orderedProjects.map((project, index) => (
-              <article className="project-row" key={project.id} style={{ zIndex: index + 1 }}>
-                <a className={`project-media${project.isMobile ? ' mobile' : ''}${project.id === 'dash' ? ' dashboard' : ''}`} href={project.link} target="_blank" rel="noreferrer">
-                  {project.isMobile && <img className="project-blur" src={project.image} alt="" aria-hidden="true" width="1600" height="900" />}
-                  <img className="project-image" src={project.image} alt={`Preview de ${project.title}`} loading="lazy" width="1600" height="900" />
-                  <span className="project-number">0{index + 1}</span>
-                </a>
-                <div className="project-copy">
-                  <div className="project-meta"><span>{project.client}</span><span>{project.date}</span></div>
-                  <h3>{project.title}</h3>
-                  <p>{project.desc[lang]}</p>
-                  <div className="project-outcomes">
-                    <small>{text.result}</small>
-                    <ul>{project.highlights[lang].slice(0, 3).map((item) => <li key={item}>{item}</li>)}</ul>
-                  </div>
-                  <div className="project-bottom">
-                    <div className="tag-list">{project.tags.slice(0, 5).map((tag) => <span key={tag}>{tag}</span>)}</div>
-                    <a href={project.link} target="_blank" rel="noreferrer">{text.open} <Arrow /></a>
-                  </div>
-                </div>
+          <div className="project-stack">
+            {projects.map((project, index) => <ProjectCard project={project} index={index} key={project.title} />)}
+          </div>
+        </section>
+
+        <section className="experience" id="experiencia" aria-labelledby="experience-title">
+          <div className="experience-heading" data-reveal>
+            <p className="eyebrow">Trajetória profissional</p>
+            <h2 id="experience-title">Experiência<br /><span>em contexto.</span></h2>
+            <p>Uma carreira construída entre produto digital, dados, operação pública e tecnologia aplicada a problemas concretos.</p>
+          </div>
+
+          <div className="experience-list">
+            {experience.map((item) => (
+              <article data-reveal key={`${item.company}-${item.period}`}>
+                <time>{item.period}</time>
+                <div><h3>{item.role}</h3><strong>{item.company}</strong></div>
+                <p>{item.description}</p>
               </article>
             ))}
           </div>
         </section>
 
-        <section className="section experience-section" id="experiencia" data-reveal>
-          <div className="section-intro compact">
-            <p className="section-label">02 · {text.experienceLabel}</p>
-            <h2>{text.experienceTitle}</h2>
+        <section className="about" id="sobre" aria-labelledby="about-title">
+          <div className="about-lead" data-reveal>
+            <p className="eyebrow">Sobre mim</p>
+            <p className="about-quote">Eu projeto no navegador e penso no produto inteiro.</p>
           </div>
-          <div className="timeline">
-            {experiences[lang].map(([role, company, period, description], index) => (
-              <article key={`${company}-${period}`}>
-                <span className="timeline-index">0{index + 1}</span>
-                <div><h3>{role}</h3><p>{company}</p></div>
-                <p>{description}</p>
-                <time>{period}</time>
-              </article>
-            ))}
-          </div>
-        </section>
 
-        <section className="section about-section" id="sobre" data-reveal>
-          <div className="about-main">
-            <p className="section-label">03 · {text.aboutLabel}</p>
-            <h2>{text.aboutTitle}</h2>
-            <p>{text.aboutCopy}</p>
+          <div className="about-copy" data-reveal>
+            <h2 id="about-title">Olá, sou Roberto.</h2>
+            <p>Sou formado em Ciência da Computação e desenvolvedor frontend com experiência em produtos web, visualização de dados e aplicações mobile. Trabalho na interseção entre clareza visual e engenharia: entendo o contexto, organizo a informação e construo interfaces que continuam boas depois do lançamento.</p>
+            <p>Hoje aplico tecnologia, automação e IA em ambientes de operação e compliance, sem deixar de lado o que mais gosto de fazer: transformar problemas confusos em produtos digitais diretos, acessíveis e bem acabados.</p>
             <div className="profile-links">
               <a href={LINKS.linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a>
               <a href={LINKS.github} target="_blank" rel="noreferrer">GitHub <Arrow /></a>
-              <a href={LINKS.resume} target="_blank" rel="noreferrer">{text.cv} <Arrow /></a>
+              <a href={LINKS.resume} target="_blank" rel="noreferrer">Baixar currículo <Arrow /></a>
             </div>
           </div>
-          <aside className="skills-panel">
-            <p className="section-label">04 · {text.stackLabel}</p>
-            <h3>{text.stackTitle}</h3>
-            {techGroups.map((group) => (
-              <div className="skill-group" key={group.id}>
-                <strong>{group.cat}</strong>
-                <div>{group.items.slice(0, 6).map((item) => <span key={item.n}>{item.n}</span>)}</div>
-              </div>
-            ))}
-          </aside>
         </section>
 
-        <section className="contact-section" id="contato" data-reveal>
-          <p className="section-label">05 · {text.contactLabel}</p>
-          <h2>{text.contactTitle}</h2>
-          <p>{text.contactCopy}</p>
-          <div className="contact-actions">
-            <a className="button light" href={`mailto:${LINKS.email}`}>{text.email} <Arrow /></a>
-            <button className="button outline" onClick={copyEmail}><span aria-live="polite">{copied ? text.copied : text.copy}</span></button>
+        <section className="capabilities" aria-labelledby="capabilities-title">
+          <div className="capabilities-title" data-reveal>
+            <p className="eyebrow">Ferramentas & competências</p>
+            <h2 id="capabilities-title">Do primeiro wireframe<br />ao deploy.</h2>
+          </div>
+
+          <div className="capability-groups">
+            {skillGroups.map((group) => (
+              <article className="capability-group" data-reveal key={group.label}>
+                <h3>{group.label}</h3>
+                <p>{group.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="contact" id="contato" aria-labelledby="contact-title">
+          <p className="eyebrow">Vamos construir algo bom</p>
+          <h2 id="contact-title">Tem uma ideia?<br /><em>Me chama.</em></h2>
+          <div className="contact-row">
+            <p>Aberto a oportunidades frontend, projetos freelance e colaborações com pessoas que valorizam produto e acabamento.</p>
+            <div className="contact-actions">
+              <a href={`mailto:${LINKS.email}`}>Enviar e-mail <Arrow /></a>
+              <button type="button" onClick={copyEmail}>
+                <span aria-live="polite">{copied ? 'E-mail copiado' : 'Copiar e-mail'}</span>
+              </button>
+            </div>
           </div>
           <a className="contact-email" href={`mailto:${LINKS.email}`}>{LINKS.email}</a>
         </section>
       </main>
 
       <footer>
-        <a href="#inicio">Roberto Miranda</a>
-        <p>{text.footer}</p>
-        <span>© 2026</span>
+        <strong>Roberto Miranda</strong>
+        <span>Frontend Developer · Recife, PE</span>
+        <a href="#inicio">Voltar ao topo ↑</a>
       </footer>
     </div>
   )
