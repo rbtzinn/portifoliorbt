@@ -169,40 +169,42 @@ export default function App() {
       })
 
       const projectRows = gsap.utils.toArray('.project-row')
-      projectRows.forEach((row, index) => {
-        const media = row.querySelector('.project-media')
-        const copy = row.querySelector('.project-copy')
-        gsap.from([media, copy], {
-          opacity: 0,
-          y: 56,
-          stagger: .12,
-          duration: .9,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: row, start: 'top 82%' },
-        })
-        if (!media.classList.contains('dashboard')) {
-          gsap.to(row.querySelector('.project-image'), {
-            yPercent: 8,
-            ease: 'none',
-            scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: .8 },
-          })
-        }
+      const desktopStack = window.matchMedia('(min-width: 1081px)').matches
 
-        if (projectRows[index + 1]) {
-          gsap.to(row, {
-            scale: .955,
-            opacity: .5,
-            transformOrigin: 'center top',
-            ease: 'none',
-            scrollTrigger: {
-              trigger: projectRows[index + 1],
-              start: 'top bottom',
-              end: 'top 92px',
-              scrub: .7,
-            },
+      if (desktopStack && projectRows.length > 1) {
+        gsap.set(projectRows.slice(1), { yPercent: 105 })
+
+        const stackTimeline = gsap.timeline({
+          defaults: { ease: 'none' },
+          scrollTrigger: {
+            trigger: '.projects-list',
+            start: 'top 92px',
+            end: () => `+=${window.innerHeight * (projectRows.length - 1)}`,
+            scrub: .8,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        })
+
+        projectRows.slice(1).forEach((row, index) => {
+          const previous = projectRows[index]
+          const position = index
+          stackTimeline
+            .to(previous, { scale: .965, opacity: .42, transformOrigin: 'center top', duration: 1 }, position)
+            .to(row, { yPercent: 0, duration: 1 }, position)
+        })
+      } else {
+        projectRows.forEach((row) => {
+          gsap.from(row, {
+            opacity: 0,
+            y: 42,
+            duration: .75,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: row, start: 'top 84%' },
           })
-        }
-      })
+        })
+      }
 
       gsap.from('.timeline article', {
         opacity: 0,
@@ -296,14 +298,10 @@ export default function App() {
 
           <div className="projects-list">
             {orderedProjects.map((project, index) => (
-              <article
-                className="project-row"
-                key={project.id}
-                style={{ zIndex: index + 1 }}
-              >
+              <article className="project-row" key={project.id} style={{ zIndex: index + 1 }}>
                 <a className={`project-media${project.isMobile ? ' mobile' : ''}${project.id === 'dash' ? ' dashboard' : ''}`} href={project.link} target="_blank" rel="noreferrer">
-                  {project.isMobile && <img className="project-blur" src={project.image} alt="" aria-hidden="true" />}
-                  <img className="project-image" src={project.image} alt={`Preview de ${project.title}`} loading="lazy" />
+                  {project.isMobile && <img className="project-blur" src={project.image} alt="" aria-hidden="true" width="1600" height="900" />}
+                  <img className="project-image" src={project.image} alt={`Preview de ${project.title}`} loading="lazy" width="1600" height="900" />
                   <span className="project-number">0{index + 1}</span>
                 </a>
                 <div className="project-copy">
