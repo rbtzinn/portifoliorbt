@@ -131,6 +131,15 @@ export default function App() {
     return () => document.body.classList.remove('menu-open')
   }, [menuOpen])
 
+  useEffect(() => {
+    if (!menuOpen) return undefined
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    window.addEventListener('keydown', closeOnEscape)
+    return () => window.removeEventListener('keydown', closeOnEscape)
+  }, [menuOpen])
+
   useLayoutEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reducedMotion) return undefined
@@ -251,17 +260,18 @@ export default function App() {
 
   return (
     <div className="site-shell" ref={appRef}>
-      <header className="site-header">
+      <header className={menuOpen ? 'site-header menu-active' : 'site-header'}>
         <div className="header-inner">
           <a className="brand" href="#inicio" aria-label="Roberto Miranda — início" onClick={closeMenu}>
             <span>RM</span>
             <div><strong>Roberto Miranda</strong><small>Frontend Developer</small></div>
           </a>
 
-          <nav className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label="Navegação principal">
+          <nav id="main-navigation" className={menuOpen ? 'main-nav is-open' : 'main-nav'} aria-label="Navegação principal">
             {['projetos', 'experiencia', 'sobre', 'contato'].map((target, index) => (
-              <a href={`#${target}`} key={target} onClick={closeMenu}>{text.nav[index]}</a>
+              <a href={`#${target}`} key={target} onClick={closeMenu}><span>0{index + 1}</span>{text.nav[index]}</a>
             ))}
+            <div className="mobile-nav-status"><i />{text.availability}</div>
           </nav>
 
           <div className="header-actions">
@@ -270,7 +280,7 @@ export default function App() {
               <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
             </div>
             <a className="header-cv" href={LINKS.resume} target="_blank" rel="noreferrer">CV <Arrow /></a>
-            <button className={menuOpen ? 'menu-button is-open' : 'menu-button'} onClick={() => setMenuOpen((value) => !value)} aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={menuOpen}><i /><i /></button>
+            <button className={menuOpen ? 'menu-button is-open' : 'menu-button'} onClick={() => setMenuOpen((value) => !value)} aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'} aria-expanded={menuOpen} aria-controls="main-navigation"><i /><i /></button>
           </div>
         </div>
       </header>
