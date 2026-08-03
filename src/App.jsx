@@ -233,7 +233,6 @@ export default function App() {
     media.add(
       {
         allowMotion: '(prefers-reduced-motion: no-preference)',
-        desktop: '(min-width: 900px)',
       },
       ({ conditions }) => {
         if (!conditions.allowMotion) return undefined
@@ -267,32 +266,6 @@ export default function App() {
             scrollTrigger: { trigger: element, start: 'top 86%', once: true },
           })
         })
-
-        gsap.utils.toArray('.project-visual').forEach((element) => {
-          gsap.from(element, {
-            clipPath: 'inset(0 0 100% 0 round 24px)',
-            duration: 1.05,
-            ease: 'power4.inOut',
-            scrollTrigger: { trigger: element, start: 'top 84%', once: true },
-          })
-        })
-
-        if (conditions.desktop) {
-          const cards = gsap.utils.toArray('.project-card')
-          cards.slice(0, -1).forEach((card, index) => {
-            gsap.to(card, {
-              scale: 0.955,
-              filter: 'brightness(.72) saturate(.76)',
-              ease: 'none',
-              scrollTrigger: {
-                trigger: cards[index + 1],
-                start: 'top bottom',
-                end: 'top 108px',
-                scrub: true,
-              },
-            })
-          })
-        }
 
         let cancelled = false
         document.fonts?.ready.then(() => {
