@@ -368,7 +368,13 @@ footer a { color: var(--text); font-family: var(--display); font-weight: 700; }
   .hero-visual { display: none; }
   .section-intro { grid-template-columns: .28fr 1fr; }
   .section-intro > p:last-child { grid-column: 2; }
-  .projects-list { display: grid; gap: clamp(52px, 8vw, 86px); padding-bottom: 0; }
+  .projects-list {
+    display: grid;
+    height: auto;
+    min-height: 0;
+    gap: clamp(52px, 8vw, 86px);
+    padding-bottom: 0;
+  }
   .project-row {
     position: relative;
     inset: auto;
