@@ -170,7 +170,8 @@ export default function App() {
         })
       })
 
-      gsap.utils.toArray('.project-row').forEach((row) => {
+      const projectRows = gsap.utils.toArray('.project-row')
+      projectRows.forEach((row, index) => {
         const media = row.querySelector('.project-media')
         const copy = row.querySelector('.project-copy')
         gsap.from([media, copy], {
@@ -186,6 +187,21 @@ export default function App() {
             yPercent: 8,
             ease: 'none',
             scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: .8 },
+          })
+        }
+
+        if (projectRows[index + 1]) {
+          gsap.to(row, {
+            scale: .955,
+            opacity: .5,
+            transformOrigin: 'center top',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: projectRows[index + 1],
+              start: 'top bottom',
+              end: 'top 92px',
+              scrub: .7,
+            },
           })
         }
       })
@@ -295,7 +311,7 @@ export default function App() {
               <article
                 className="project-row"
                 key={project.id}
-                style={{ '--stack-top': `${92 + index * 8}px`, zIndex: index + 1 }}
+                style={{ zIndex: index + 1 }}
               >
                 <a className={`project-media${project.isMobile ? ' mobile' : ''}${project.id === 'dash' ? ' dashboard' : ''}`} href={project.link} target="_blank" rel="noreferrer">
                   {project.isMobile && <img className="project-blur" src={project.image} alt="" aria-hidden="true" />}

@@ -331,16 +331,16 @@ main { padding-top: 76px; }
 .section-intro > p:last-child { color: var(--muted); font-size: .83rem; line-height: 1.75; }
 .section-intro.compact { grid-template-columns: .36fr 1.65fr; }
 
-.projects-list { display: grid; gap: 0; }
+.projects-list { display: block; padding-bottom: 6vh; }
 .project-row {
   position: sticky;
-  top: var(--stack-top);
-  min-height: 72vh;
+  top: 92px;
+  min-height: calc(100svh - 116px);
   display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(340px, .75fr);
   gap: clamp(34px, 5vw, 78px);
   align-items: center;
-  margin-bottom: clamp(72px, 14vh, 150px);
+  margin-bottom: 28vh;
   padding: clamp(22px, 3vw, 42px);
   overflow: hidden;
   border: 1px solid var(--line-strong);
@@ -444,7 +444,7 @@ footer a { color: var(--text); font-family: var(--display); font-weight: 700; }
   .scene-shell { width: min(100%, 760px); min-height: 620px; }
   .section-intro { grid-template-columns: .28fr 1fr; }
   .section-intro > p:last-child { grid-column: 2; }
-  .projects-list { gap: clamp(52px, 8vw, 86px); }
+  .projects-list { display: grid; gap: clamp(52px, 8vw, 86px); padding-bottom: 0; }
   .project-row {
     position: relative;
     top: auto;
