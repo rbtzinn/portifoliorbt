@@ -27,6 +27,32 @@ const projects = [
     fit: 'contain',
   },
   {
+    title: 'Rolê de Bike',
+    kind: 'Eventos & turismo local · inscrição online',
+    client: 'Rolê de Bike',
+    date: '2026',
+    image: '/assets/media/projects/role-de-bike.png',
+    link: 'https://roledebike.vercel.app/',
+    description: 'Plataforma de eventos que transforma a divulgação do passeio em uma jornada completa de inscrição, pagamento e relacionamento com os participantes.',
+    impact: ['Inscrição com autenticação e histórico do participante', 'Pagamento via Pix com QR Code e acompanhamento de status', 'Painel administrativo para gestão das inscrições'],
+    stack: ['React', 'Firebase', 'Tailwind', 'Pix'],
+    tone: 'lilac',
+    fit: 'cover',
+  },
+  {
+    title: 'Laura Cake',
+    kind: 'Food service · cardápio digital',
+    client: 'Laura Cake e Sabores da Casa',
+    date: '2026',
+    image: '/assets/media/projects/laura-cake.png',
+    link: 'https://laura-cake-cardapio-digital.anaiv.workers.dev/',
+    description: 'Cardápio responsivo que organiza a descoberta dos produtos, simplifica a personalização do pedido e conduz a compra até o WhatsApp.',
+    impact: ['Carrinho persistente com opções, adicionais e observações', 'Disponibilidade automática por dia e horário', 'Cálculo de entrega, embalagem e total antes do WhatsApp'],
+    stack: ['React', 'TypeScript', 'Tailwind', 'WhatsApp'],
+    tone: 'sun',
+    fit: 'cover',
+  },
+  {
     title: 'LUXE Store',
     kind: 'E-commerce · experiência editorial',
     client: 'Projeto autoral',
@@ -354,7 +380,7 @@ export default function App() {
               <span>Em produção · 2026</span>
             </div>
             <a className="hero-showcase__screen" href={projects[0].link} target="_blank" rel="noreferrer" aria-label="Abrir Dashboard Cultural em uma nova aba">
-              <img src={projects[0].image} alt="Dashboard Cultural da EMPETUR" width="1637" height="931" decoding="async" fetchPriority="high" />
+              <img src={projects[0].image} alt="Dashboard Cultural da EMPETUR" width="1637" height="931" decoding="async" fetchpriority="high" />
               <span>Abrir case <Arrow /></span>
             </a>
             <div className="hero-showcase__caption">
