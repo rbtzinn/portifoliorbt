@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import './styles/tailwind.css'
+import './styles/main.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -18,7 +18,7 @@ const projects = [
     kind: 'Dados públicos · produto em produção',
     client: 'EMPETUR',
     date: '2026',
-    image: '/assets/media/projects/emeptur-painel.png',
+    image: '/assets/media/projects/emeptur-painel.webp',
     link: 'https://empetur-painel.vercel.app',
     description: 'Uma plataforma analítica que transforma bases governamentais complexas em uma consulta simples, visual e transparente.',
     impact: ['Mapa interativo de Pernambuco com D3.js', 'Normalização de dados públicos não estruturados', 'Indicadores e filtros para tomada de decisão'],
@@ -31,7 +31,7 @@ const projects = [
     kind: 'Eventos & turismo local · inscrição online',
     client: 'Rolê de Bike',
     date: '2026',
-    image: '/assets/media/projects/role-de-bike.png',
+    image: '/assets/media/projects/role-de-bike.webp',
     link: 'https://roledebike.vercel.app/',
     description: 'Plataforma de eventos que transforma a divulgação do passeio em uma jornada completa de inscrição, pagamento e relacionamento com os participantes.',
     impact: ['Inscrição com autenticação e histórico do participante', 'Pagamento via Pix com QR Code e acompanhamento de status', 'Painel administrativo para gestão das inscrições'],
@@ -44,7 +44,7 @@ const projects = [
     kind: 'Food service · cardápio digital',
     client: 'Laura Cake e Sabores da Casa',
     date: '2026',
-    image: '/assets/media/projects/laura-cake.png',
+    image: '/assets/media/projects/laura-cake.webp',
     link: 'https://laura-cake-cardapio-digital.anaiv.workers.dev/',
     description: 'Cardápio responsivo que organiza a descoberta dos produtos, simplifica a personalização do pedido e conduz a compra até o WhatsApp.',
     impact: ['Carrinho persistente com opções, adicionais e observações', 'Disponibilidade automática por dia e horário', 'Cálculo de entrega, embalagem e total antes do WhatsApp'],
@@ -57,7 +57,7 @@ const projects = [
     kind: 'E-commerce · experiência editorial',
     client: 'Projeto autoral',
     date: '2026',
-    image: '/assets/media/projects/luxe-store.png',
+    image: '/assets/media/projects/luxe-store.webp',
     link: 'https://luxestore-eight.vercel.app/',
     description: 'E-commerce bilíngue com catálogo dinâmico, direção visual premium e uma experiência de compra fluida em qualquer tela.',
     impact: ['Catálogo integrado à DummyJSON', 'Internacionalização completa PT-BR e EN', 'Navegação responsiva orientada à conversão'],
@@ -70,7 +70,7 @@ const projects = [
     kind: 'Operação logística · mobile first',
     client: 'Logistics Corp',
     date: '2026',
-    image: '/assets/media/projects/frotas-demo.png',
+    image: '/assets/media/projects/frotas-demo.webp',
     link: 'https://frotasapp.vercel.app',
     description: 'Controle de frotas com assinatura digital, funcionamento offline e sincronização automática para equipes em campo.',
     impact: ['Assinatura capturada em canvas', 'Fila offline com sincronização automática', 'Integração com Google Sheets'],
@@ -83,7 +83,7 @@ const projects = [
     kind: 'Entretenimento · produto autoral',
     client: 'Projeto autoral',
     date: '2026',
-    image: '/assets/media/projects/streamvibe.png',
+    image: '/assets/media/projects/streamvibe.webp',
     link: 'https://films-port.vercel.app',
     description: 'Catálogo de filmes com descoberta de conteúdo, detalhes, trailers e uma lista pessoal que permanece entre sessões.',
     impact: ['Dados em tempo real pela API TMDB', 'Destaques editoriais dinâmicos', 'Favoritos persistidos localmente'],
@@ -96,7 +96,7 @@ const projects = [
     kind: 'Inventário · aplicação Android',
     client: 'Novo Atacarejo',
     date: '2025',
-    image: '/assets/media/projects/rfid-novo.png',
+    image: '/assets/media/projects/rfid-novo.webp',
     link: 'https://github.com/rbtzinn/RFID-NovoAtacarejo',
     description: 'Aplicação implantada em loja para acelerar inventários através da leitura de etiquetas RFID em tempo real.',
     impact: ['Integração direta com hardware RFID', 'Relatórios de inventário em CSV', 'Processamento e conferência de estoque'],
@@ -380,7 +380,7 @@ export default function App() {
               <span>Em produção · 2026</span>
             </div>
             <a className="hero-showcase__screen" href={projects[0].link} target="_blank" rel="noreferrer" aria-label="Abrir Dashboard Cultural em uma nova aba">
-              <img src={projects[0].image} alt="Dashboard Cultural da EMPETUR" width="1637" height="931" decoding="async" fetchpriority="high" />
+              <img src={projects[0].image} alt="Dashboard Cultural da EMPETUR" width="1600" height="910" decoding="async" fetchpriority="high" />
               <span>Abrir case <Arrow /></span>
             </a>
             <div className="hero-showcase__caption">
