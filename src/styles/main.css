@@ -523,6 +523,29 @@ footer :focus-visible {
   border: 1px solid var(--rule-2);
   border-radius: clamp(24px, 3vw, 44px);
   box-shadow: 0 32px 80px var(--rule-2);
+  /* o card recua a partir da linha do sticky, nao do proprio centro */
+  transform-origin: center top;
+}
+
+/* Escurecimento do card coberto. Overlay com opacity e muito mais barato que
+   animar filter: brightness() num elemento sticky do tamanho da viewport. */
+@property --card-dim {
+  syntax: '<number>';
+  /* precisa herdar: o ::after e descendente e com inherits:false ele
+     receberia o initial-value em vez do valor animado no card */
+  inherits: true;
+  initial-value: 0;
+}
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background: var(--ink);
+  border-radius: inherit;
+  opacity: var(--card-dim, 0);
+  pointer-events: none;
 }
 
 .project-card:last-child { margin-bottom: 0; }
@@ -769,6 +792,7 @@ footer a { justify-self: end; color: var(--mint); }
   .section-heading { grid-template-columns: .32fr 1fr; }
   .section-heading > p:last-child { grid-column: 2; }
   .project-card { position: relative; top: auto; min-height: 0; margin-bottom: 64px; filter: none !important; transform: none !important; }
+  .project-card::after { display: none; }
   .project-card__grid { grid-template-columns: 1fr; }
   .project-visual { aspect-ratio: 16 / 9.5; }
   .project-info { padding-top: 8px; }
@@ -916,6 +940,7 @@ footer a { justify-self: end; color: var(--mint); }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .scroll-progress { display: none; }
   .project-card { filter: none !important; transform: none !important; }
+  .project-card::after { display: none; }
   [data-reveal], .project-visual { opacity: 1 !important; transform: none !important; clip-path: none !important; }
 }
 

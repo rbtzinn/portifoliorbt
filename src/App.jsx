@@ -270,6 +270,7 @@ export default function App() {
     media.add(
       {
         allowMotion: '(prefers-reduced-motion: no-preference)',
+        stacksCards: '(min-width: 901px)',
       },
       ({ conditions }) => {
         if (!conditions.allowMotion) return undefined
@@ -296,6 +297,34 @@ export default function App() {
             scrollTrigger: { trigger: element, start: 'top 86%', once: true },
           })
         })
+
+        // Os cards sao sticky e se empilham. Conforme o proximo sobe por cima,
+        // o de baixo recua: o range de scroll vai do momento em que o proximo
+        // entra na viewport ate ele alcancar a linha do sticky — ou seja, o
+        // scrub acompanha a cobertura real, nao um intervalo arbitrario.
+        if (conditions.stacksCards) {
+          const cards = gsap.utils.toArray('.project-card')
+
+          cards.forEach((card, index) => {
+            const next = cards[index + 1]
+            if (!next) return
+
+            gsap.to(card, {
+              scale: 0.93,
+              '--card-dim': 0.32,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: next,
+                // Termina em 55% e nao na linha do sticky: os cards sao mais
+                // altos que a viewport, entao ao chegar no sticky o card de
+                // baixo ja esta 100% coberto e o efeito nao seria visto.
+                start: 'top 92%',
+                end: 'top 55%',
+                scrub: 0.4,
+              },
+            })
+          })
+        }
 
         let cancelled = false
         document.fonts?.ready.then(() => {
