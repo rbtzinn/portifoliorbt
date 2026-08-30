@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Roberto Miranda — Desenvolvedor Frontend</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400..800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root {
+    --ink: #14162a;
+    --body: #2b2e42;
+    --soft: #565a72;
+    --rule: #d6d2c8;
+    --accent: #1f3fd4;
+    --paper: #ffffff;
+    --sans: 'IBM Plex Sans', 'Segoe UI', Arial, sans-serif;
+    --display: 'Bricolage Grotesque', 'IBM Plex Sans', Arial, sans-serif;
+    --mono: 'IBM Plex Mono', Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  body {
+    font-family: var(--sans);
+    font-size: 8.7pt;
+    line-height: 1.32;
+    color: var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { width: 210mm; min-height: 297mm; padding: 8mm 12mm 0; background: var(--paper); }
+
+  /* ---------- cabeçalho ---------- */
+  header { border-bottom: 1.6pt solid var(--ink); padding-bottom: 5pt; margin-bottom: 6pt; }
+  h1 {
+    margin: 0; font-family: var(--display); font-size: 23pt; font-weight: 750;
+    letter-spacing: -.035em; line-height: 1; color: var(--ink);
+  }
+  .role { margin: 3pt 0 0; font-size: 10pt; font-weight: 600; color: var(--accent); letter-spacing: -.005em; }
+  .contact { margin: 4pt 0 0; font-family: var(--mono); font-size: 7.4pt; color: var(--soft); line-height: 1.4; }
+  .contact a { color: var(--soft); text-decoration: none; border-bottom: .5pt solid var(--rule); }
+  .contact span { white-space: nowrap; }
+
+  /* ---------- seções ---------- */
+  h2 {
+    margin: 6pt 0 3pt; font-family: var(--mono); font-size: 7.6pt; font-weight: 600;
+    letter-spacing: .13em; text-transform: uppercase; color: var(--ink);
+    border-bottom: .6pt solid var(--rule); padding-bottom: 3pt;
+  }
+  h2:first-of-type { margin-top: 0; }
+
+  .summary { margin: 0; font-size: 9pt; line-height: 1.44; color: var(--body); }
+  .summary b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- entradas ---------- */
+  .item { margin-bottom: 3.5pt; }
+  .item:last-child { margin-bottom: 0; }
+  .item-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10pt; }
+  .item-role { font-size: 9.8pt; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+  .item-date { font-family: var(--mono); font-size: 7.5pt; font-weight: 500; color: var(--soft); white-space: nowrap; }
+  .item-org { font-size: 8.6pt; font-weight: 500; color: var(--accent); margin-top: .5pt; }
+  ul { margin: 3pt 0 0; padding: 0 0 0 10pt; list-style: none; }
+  li { position: relative; margin-bottom: 1.5pt; padding-left: 0; }
+  li::before {
+    content: ''; position: absolute; left: -8pt; top: 4.4pt;
+    width: 2.6pt; height: 2.6pt; border-radius: 50%; background: var(--accent);
+  }
+  li:last-child { margin-bottom: 0; }
+  li b, .item p b { color: var(--ink); font-weight: 600; }
+  .item > p { margin: 3pt 0 0; }
+
+  .compact { display: flex; justify-content: space-between; align-items: baseline; gap: 10pt; margin-bottom: 2.5pt; }
+  .compact:last-child { margin-bottom: 0; }
+  .compact .t { font-size: 8.2pt; }
+  .compact .t b { color: var(--ink); font-weight: 650; }
+
+  /* ---------- projetos ---------- */
+  .proj { margin-bottom: 3.5pt; }
+  .proj:last-child { margin-bottom: 0; }
+  .proj-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10pt; }
+  .proj-name { font-size: 9.6pt; font-weight: 700; color: var(--ink); letter-spacing: -.01em; }
+  .proj-name a { color: var(--ink); text-decoration: none; }
+  .proj-stack { font-family: var(--mono); font-size: 7.2pt; color: var(--soft); white-space: nowrap; }
+  .proj p { margin: 2pt 0 0; }
+
+  /* ---------- stack ---------- */
+  .stack { display: grid; grid-template-columns: 62pt 1fr; gap: 2.5pt 9pt; }
+  .stack dt { font-family: var(--mono); font-size: 7.4pt; font-weight: 600; color: var(--soft); text-transform: uppercase; letter-spacing: .05em; padding-top: .6pt; }
+  .stack dd { margin: 0; font-size: 8.5pt; color: var(--body); }
+
+  /* ---------- rodapé de seção em duas colunas ---------- */
+  .two { display: grid; grid-template-columns: 1.18fr 1fr; gap: 0 12pt; }
+  .two > div > h2 { margin-top: 0; }
+
+  @page { size: A4; margin: 0; }
+  @media print { .page { min-height: 0; height: auto; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>Roberto Miranda</h1>
+    <p class="role">Desenvolvedor Frontend — React, TypeScript e visualização de dados</p>
+    <p class="contact">
+      <span>rbtgabriel04@gmail.com</span> · <span>(81) 98331-2369</span> · <span>Recife, PE</span> ·
+      <span><a href="https://github.com/rbtzinn">github.com/rbtzinn</a></span> ·
+      <span><a href="https://www.linkedin.com/in/roberto-gabriel-ara%C3%BAjo-miranda/">linkedin</a></span> ·
+      <span><a href="https://portifoliorbt.vercel.app">portifoliorbt.vercel.app</a></span>
+    </p>
+  </header>
+
+  <h2>Resumo</h2>
+  <p class="summary">
+    Formado em Ciência da Computação, com produtos <b>em produção</b> no setor público e no varejo — de painéis de
+    transparência governamental a aplicações mobile com operação offline. Atuo do requisito ao deploy. Hoje aplico TI e IA
+    a controles internos na Administração de Suape. Remoto ou híbrido.
+  </p>
+
+  <h2>Experiência</h2>
+
+  <div class="item">
+    <div class="item-top">
+      <span class="item-role">Gestor Técnico — Compliance (TI &amp; IA)</span>
+      <span class="item-date">Jul 2026 — atual</span>
+    </div>
+    <div class="item-org">Administração de Suape — Complexo Industrial Portuário · Ipojuca, PE</div>
+    <ul>
+      <li>Aplicação de TI e IA a controles internos e mitigação de riscos: mapeamento de processos administrativos e
+        estruturação de rotinas automatizadas de monitoramento de conformidade.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <div class="item-top">
+      <span class="item-role">Desenvolvedor Frontend</span>
+      <span class="item-date">2025 — atual</span>
+    </div>
+    <div class="item-org">EMPETUR — Empresa de Turismo de Pernambuco · Recife, PE</div>
+    <ul>
+      <li>
+        Desenvolvi o <b>painel de transparência das contratações artísticas</b>, publicado no site oficial da EMPETUR
+        para atender a uma exigência de transparência cobrada pelo Governo do Estado. Tornou-se a resposta institucional
+        da empresa à demanda e <b>segue em operação, alimentado pela equipe até hoje</b>.
+      </li>
+      <li>
+        Defini o nível de agregação — região, período e indicador — para o gasto público ficar auditável e legível ao
+        cidadão, em vez de planilha bruta contrato a contrato.
+      </li>
+      <li>
+        Publica <b>1.572 apresentações, 635 artistas e 163 municípios</b> em KPIs, filtros, tabelas exportáveis e mapa
+        interativo (D3-geo, React Simple Maps, Tremor), sobre pipeline no navegador que normaliza e deduplica os CSV
+        governamentais com PapaParse.
+      </li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <div class="item-top">
+      <span class="item-role">Desenvolvedor Full Stack — Freelance</span>
+      <span class="item-date">2022 — 2024</span>
+    </div>
+    <div class="item-org">Smartracker Tecnologias · Remoto</div>
+    <ul>
+      <li>
+        Aplicação Android de inventário RFID para o <b>Novo Atacarejo</b>: o inventário de uma loja caiu de
+        <b>4–5 dias para 1 dia ou menos</b>. O RFID acelerou a coleta; o aplicativo fechou o processo, consolidando as
+        leituras e tornando o resultado visual e conferível.
+      </li>
+      <li>
+        Leitura de tags em tempo real, backend de conversão de planilhas de patrimônio em base estruturada e exportação
+        de relatórios em CSV. Levantamento de requisitos direto com o cliente.
+      </li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <div class="item-top">
+      <span class="item-role">Apoio Administrativo</span>
+      <span class="item-date">2024 — 2025</span>
+    </div>
+    <div class="item-org">RM Terceirizações · Controladoria Geral do Estado de PE — organização e controle de processos e dados, com foco em rastreabilidade e prazos.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-top">
+      <span class="item-role">Estagiário — Suporte de TI</span>
+      <span class="item-date">2022 — 2024</span>
+    </div>
+    <div class="item-org">Controladoria Geral do Estado de PE — suporte a hardware, software e redes, inventário de ativos e gestão do ciclo de chamados.</div>
+  </div>
+
+  <h2>Projetos</h2>
+
+  <div class="proj">
+    <div class="proj-top">
+      <span class="proj-name"><a href="https://roledebike.vercel.app/">Rolê de Bike</a> — plataforma de inscrições</span>
+      <span class="proj-stack">React · Firebase · Pix · Tailwind</span>
+    </div>
+    <p>
+      Antes, inscrição vinha por WhatsApp, pagamento por canais diferentes e a lista era remontada à mão a cada edição.
+      O sistema reúne inscrição, pagamento e comprovante num painel só — quem vai, quem já pagou — com <b>exportação de
+      lista por nome, tamanho de camisa e tipo de kit</b>. Resolveu o gargalo de organização do evento.
+    </p>
+  </div>
+
+  <div class="proj">
+    <div class="proj-top">
+      <span class="proj-name"><a href="https://laura-cake-cardapio-digital.anaiv.workers.dev/">Laura Cake</a> — cardápio digital</span>
+      <span class="proj-stack">React · TypeScript · Tailwind</span>
+    </div>
+    <p>
+      Cardápio com carrinho persistente, disponibilidade por dia e horário e pedido concluído no WhatsApp; feito em dupla.
+      Segundo a cliente, <b>ampliou a base de clientes</b> e permite preço abaixo dos marketplaces de delivery, por operar em
+      <b>mensalidade fixa em vez de comissão por pedido</b>. Em operação com cliente pagante.
+    </p>
+  </div>
+
+  <div class="proj">
+    <div class="proj-top">
+      <span class="proj-name"><a href="https://frotasapp.vercel.app">App de Frotas</a> — operação em campo</span>
+      <span class="proj-stack">Flutter · Dart · Apps Script · Material 3</span>
+    </div>
+    <p>
+      Para equipes sem conexão garantida: <b>assinatura digital em canvas</b>, fila offline e sincronização automática
+      com Google Sheets quando a rede volta.
+    </p>
+  </div>
+
+  <div class="proj">
+    <p style="margin-top:1pt">
+      <b style="color:var(--ink)">Também autorais (React · TypeScript):</b>
+      <a href="https://luxestore-eight.vercel.app/" style="color:inherit"><b>LUXE Store</b></a>, e-commerce bilíngue com painel administrativo ·
+      <a href="https://films-port.vercel.app" style="color:inherit"><b>StreamVibe</b></a>, catálogo de filmes com TMDB API e favoritos persistentes.
+    </p>
+  </div>
+
+  <h2>Stack técnica</h2>
+  <dl class="stack">
+    <dt>Frontend</dt><dd>React · Next.js · TypeScript · JavaScript ES6+ · Tailwind CSS · Sass · HTML5 · CSS3 · Figma</dd>
+    <dt>Dados &amp; viz</dt><dd>D3.js · Tremor · React Simple Maps · PapaParse · TanStack Query · Zustand</dd>
+    <dt>Mobile</dt><dd>Flutter · Dart · Kotlin · Java (Android)</dd>
+    <dt>Back &amp; infra</dt><dd>Node.js · Express · Firebase · PostgreSQL · MySQL · SQLite · Git &nbsp;·&nbsp; <span style="color:var(--soft)">Familiaridade: Docker · AWS · React Native · Python</span></dd>
+  </dl>
+
+  <div class="two">
+    <div>
+      <h2>Formação</h2>
+      <div class="compact">
+        <span class="t"><b>Ciência da Computação</b> — UNINASSAU, Recife</span>
+        <span class="item-date">2022 — 2025</span>
+      </div>
+      <div class="compact">
+        <span class="t"><b>Análise e Desenvolvimento de Sistemas</b> — GranFaculdade</span>
+        <span class="item-date">2025 — 2026</span>
+      </div>
+      <div class="compact">
+        <span class="t"><b>Engenheiro Front-end</b> — EBAC</span>
+        <span class="item-date">2023 — 2025</span>
+      </div>
+    </div>
+    <div>
+      <h2>Idiomas &amp; certificações</h2>
+      <div class="compact">
+        <span class="t"><b>Inglês intermediário</b> — leitura e escrita técnica</span>
+      </div>
+      <div class="compact">
+        <span class="t"><b>Engenheiro Front-end</b> — EBAC · +65h</span>
+        <span class="item-date">Set 2025</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
